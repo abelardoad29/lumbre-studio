@@ -4,7 +4,7 @@ import Footer from "./components/Footer";
 
 const mailtoLink =
   "mailto:contacto@lumbrestudio.com?subject=Cotizaci%C3%B3n%20-%20Lumbre%20Studio";
-const whatsappLink = "https://wa.me/0000000000";
+const whatsappLink = "https://wa.me/+526681481977";
 
 const services = [
   {
