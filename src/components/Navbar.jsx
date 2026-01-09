@@ -11,7 +11,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 border-b border-lumbre-gray/80 bg-lumbre-black/90 backdrop-blur">
       <nav
         className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between"
-        aria-label="Navegacion principal"
+        aria-label="Navegaci&oacute;n principal"
       >
         <a href="#hero" className="flex items-center gap-3">
           <img src={logo} alt="Logo de Lumbre Studio" className="h-9 w-9" />

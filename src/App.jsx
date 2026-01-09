@@ -10,12 +10,12 @@ const services = [
   {
     title: "Estrategia y discovery",
     description:
-      "Alineamos vision, metas y alcance para que el producto salga al mercado con claridad.",
+      "Alineamos visi\u00f3n, metas y alcance para que el producto salga al mercado con claridad.",
   },
   {
     title: "Frontend premium",
     description:
-      "Interfaces rapidas, accesibles y coherentes con tu marca, listas para escalar.",
+      "Interfaces r\u00e1pidas, accesibles y coherentes con tu marca, listas para escalar.",
   },
   {
     title: "Plataformas a medida",
@@ -26,19 +26,19 @@ const services = [
 
 const processSteps = [
   {
-    title: "Inmersion",
-    description: "Entendemos el negocio, el usuario y el contexto tecnico real.",
+    title: "Inmersi\u00f3n",
+    description: "Entendemos el negocio, el usuario y el contexto t\u00e9cnico real.",
   },
   {
     title: "Arquitectura",
-    description: "Definimos el plan, el stack y los entregables con precision.",
+    description: "Definimos el plan, el stack y los entregables con precisi\u00f3n.",
   },
   {
-    title: "Construccion",
+    title: "Construcci\u00f3n",
     description: "Iteramos con entregas continuas, pruebas y visibilidad total.",
   },
   {
-    title: "Evolucion",
+    title: "Evoluci\u00f3n",
     description: "Medimos impacto, optimizamos y mantenemos velocidad.",
   },
 ];
@@ -65,16 +65,16 @@ function App() {
             <div>
               <p className="text-xs uppercase tracking-[0.45em] text-lumbre-brown">Estudio digital</p>
               <h1 className="mt-4 text-4xl font-semibold tracking-tight text-lumbre-off md:text-6xl">
-                Producto digital con estetica industrial y precision tecnica.
+                Producto digital con est&eacute;tica industrial y precisi&oacute;n t&eacute;cnica.
               </h1>
               <p className="mt-6 text-lg text-lumbre-off/80">C&oacute;digo que es pura lumbre.</p>
               <p className="mt-4 text-sm text-lumbre-off/60">
-                Construimos plataformas y experiencias web que combinan diseno minimalista, velocidad y
+                Construimos plataformas y experiencias web que combinan dise&ntilde;o minimalista, velocidad y
                 estrategia de negocio.
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <a className={primaryButton} href={mailtoLink}>
-                  Solicitar cotizacion
+                  Solicitar cotizaci&oacute;n
                 </a>
                 <a className={secondaryButton} href={whatsappLink} target="_blank" rel="noreferrer">
                   WhatsApp
@@ -94,10 +94,10 @@ function App() {
                     Roadmap claro para equipos internos o startups en crecimiento.
                   </div>
                   <div className="rounded-2xl border border-lumbre-gray/70 bg-lumbre-black/40 p-4">
-                    Implementacion limpia, documentada y facil de mantener.
+                    Implementaci&oacute;n limpia, documentada y f&aacute;cil de mantener.
                   </div>
                   <div className="rounded-2xl border border-lumbre-gray/70 bg-lumbre-black/40 p-4">
-                    Diseno funcional con enfoque en conversion.
+                    Dise&ntilde;o funcional con enfoque en conversi&oacute;n.
                   </div>
                 </div>
               </div>
@@ -108,12 +108,12 @@ function App() {
         <Section
           id="problema"
           eyebrow="Problema"
-          title="La brecha entre vision y ejecucion tecnica"
-          subtitle="Los equipos de producto necesitan velocidad sin sacrificar calidad, pero los procesos tradicionales frenan la innovacion."
+          title="La brecha entre visi&oacute;n y ejecuci&oacute;n t&eacute;cnica"
+          subtitle="Los equipos de producto necesitan velocidad sin sacrificar calidad, pero los procesos tradicionales frenan la innovaci&oacute;n."
         >
           <div className="grid gap-10 md:grid-cols-2">
             <p className="text-base text-lumbre-off/80">
-              Lumbre Studio trabaja como un equipo senior extendido: alineamos estrategia y tecnologia
+              Lumbre Studio trabaja como un equipo senior extendido: alineamos estrategia y tecnolog&iacute;a
               para que cada release tenga impacto tangible y sostenga el crecimiento.
             </p>
             <ul className="space-y-4 text-sm text-lumbre-off/70">
@@ -123,7 +123,7 @@ function App() {
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-2 h-2 w-2 rounded-full bg-lumbre-brown" aria-hidden="true" />
-                Plataformas sin mantenimiento o con arquitectura fragil.
+                Plataformas sin mantenimiento o con arquitectura fr&aacute;gil.
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-2 h-2 w-2 rounded-full bg-lumbre-brown" aria-hidden="true" />
@@ -137,7 +137,7 @@ function App() {
           id="servicios"
           eyebrow="Servicios"
           title="Soluciones digitales con enfoque en impacto"
-          subtitle="Selecciona el nivel de apoyo que necesitas: desde discovery hasta construccion completa."
+          subtitle="Selecciona el nivel de apoyo que necesitas: desde discovery hasta construcci&oacute;n completa."
         >
           <div className="grid gap-6 md:grid-cols-3">
             {services.map((service) => (
@@ -156,7 +156,7 @@ function App() {
           id="proceso"
           eyebrow="Proceso"
           title="Un flujo claro para equipos que no pueden detenerse"
-          subtitle="Metodologia compacta con visibilidad y entregables medibles."
+          subtitle="Metodolog&iacute;a compacta con visibilidad y entregables medibles."
         >
           <ol className="grid gap-6 md:grid-cols-2">
             {processSteps.map((step, index) => (
@@ -175,12 +175,12 @@ function App() {
           id="contacto"
           eyebrow="Contacto"
           title="Listos para encender tu producto"
-          subtitle="Escribenos para una cotizacion inicial y definamos el siguiente release."
+          subtitle="Escr&iacute;benos para una cotizaci&oacute;n inicial y definamos el siguiente release."
           className="bg-lumbre-gray/20"
         >
           <div className="flex flex-col gap-4 sm:flex-row">
             <a className={primaryButton} href={mailtoLink}>
-              Solicitar cotizacion
+              Solicitar cotizaci&oacute;n
             </a>
             <a className={secondaryButton} href={whatsappLink} target="_blank" rel="noreferrer">
               WhatsApp
