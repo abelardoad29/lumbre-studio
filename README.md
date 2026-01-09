@@ -25,11 +25,17 @@ npm run build
 - `/` = Ingl&eacute;s (EN)
 - `/es` = Espa&ntilde;ol (ES)
 
+## Idioma autom&aacute;tico
+
+- Detecta idioma con `navigator.language` / `navigator.languages`.
+- Guarda preferencia manual en `localStorage` (`langPref`).
+
 ## Contenido y productos
 
 - Copys por idioma: `src/pages/LandingEN.jsx` y `src/pages/LandingES.jsx`.
-- Productos y precios (placeholders): `src/content/products.en.js` y `src/content/products.es.js`.
-- Links editables (Instagram/WhatsApp): `INSTAGRAM_LINK` y `WHATSAPP_LINK` en `src/App.jsx`.
+- Productos y precios: `src/content/products.en.js` y `src/content/products.es.js`.
+- Links editables (Instagram/WhatsApp): `INSTAGRAM_URL` y `WHATSAPP_LINK` en `src/App.jsx`.
+- Bot&oacute;n flotante de Instagram: `src/components/FloatingInstagramButton.jsx`.
 
 ## Deploy en Vercel
 
@@ -41,7 +47,7 @@ npm run build
 
 ## Reemplazar logo y favicon
 
-- Logo principal: `src/assets/logo-lumbre.png`
+- Logo principal: `src/assets/logo-cactus.png`
 - Archivo fuente: `src/assets/LogoLumbre.png`
 - Favicon: `public/favicon.png`
 
@@ -51,4 +57,4 @@ Sustituye los archivos por los assets reales manteniendo los mismos nombres.
 
 - Email: `contacto@lumbrestudio.com`
 - WhatsApp: actualiza `WHATSAPP_LINK` en `src/App.jsx`
-- Instagram: actualiza `INSTAGRAM_LINK` en `src/App.jsx`
+- Instagram: actualiza `INSTAGRAM_URL` en `src/App.jsx`

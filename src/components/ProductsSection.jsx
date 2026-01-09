@@ -12,10 +12,21 @@ const ProductsSection = ({
   scripts = [],
   mailtoLink,
 }) => {
+  const primaryProduct = products.find((product) => Array.isArray(product.tiers) && product.tiers.length);
+  const secondaryProducts = primaryProduct
+    ? products.filter((product) => product.id !== primaryProduct.id)
+    : products;
+
   return (
     <Section id={id} eyebrow={eyebrow} title={title} subtitle={subtitle}>
-      <div className="grid gap-6 lg:grid-cols-2">
-        {products.map((product) => (
+      {primaryProduct ? (
+        <div className="mb-10">
+          <ProductCard {...primaryProduct} mailtoLink={mailtoLink} />
+        </div>
+      ) : null}
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {secondaryProducts.map((product) => (
           <ProductCard key={product.id} {...product} mailtoLink={mailtoLink} />
         ))}
       </div>

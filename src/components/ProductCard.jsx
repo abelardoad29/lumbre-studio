@@ -2,6 +2,7 @@ const ProductCard = ({
   title,
   description,
   priceLabel,
+  priceLines = [],
   features = [],
   tiers = [],
   ctaLabel = "Get a quote",
@@ -18,7 +19,14 @@ const ProductCard = ({
       <div>
         <h3 className="text-lg font-semibold text-lumbre-off">{title}</h3>
         {description ? <p className="mt-2 text-sm text-lumbre-off/70">{description}</p> : null}
-        {!hasTiers && priceLabel ? <p className="mt-3 text-xs text-lumbre-off/60">{priceLabel}</p> : null}
+        {!hasTiers && (priceLabel || priceLines.length) ? (
+          <div className="mt-3 space-y-1 text-xs text-lumbre-off/60">
+            {priceLabel ? <p>{priceLabel}</p> : null}
+            {priceLines.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
+          </div>
+        ) : null}
       </div>
 
       {hasTiers ? (
@@ -32,7 +40,7 @@ const ProductCard = ({
                 <p className="text-sm font-semibold text-lumbre-off">{tier.name}</p>
                 <p className="text-xs text-lumbre-off/70">{tier.price}</p>
               </div>
-              {tier.timeline ? <p className="mt-2 text-xs text-lumbre-off/60">{tier.timeline}</p> : null}
+              {tier.note ? <p className="mt-2 text-xs text-lumbre-off/60">{tier.note}</p> : null}
               <ul className="mt-3 space-y-2 text-xs text-lumbre-off/70">
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2">
@@ -43,10 +51,10 @@ const ProductCard = ({
               </ul>
               <div className="mt-4 flex flex-wrap gap-2">
                 <a className={primaryButton} href={mailtoLink}>
-                  {tier.ctaPrimary}
+                  {tier.ctaPrimary || ctaLabel}
                 </a>
                 <a className={secondaryButton} href={mailtoLink}>
-                  {tier.ctaSecondary}
+                  {tier.ctaSecondary || "Email us"}
                 </a>
               </div>
             </div>

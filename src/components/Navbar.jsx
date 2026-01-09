@@ -1,10 +1,8 @@
-import logo from "../assets/logo-lumbre.png";
+import logo from "../assets/logo-cactus.png";
 import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeToggle from "./ThemeToggle";
 
-const Navbar = ({ links = [], instagramLink = "", instagramLabel = "Instagram" }) => {
-  const instagramClasses =
-    "inline-flex items-center justify-center rounded-full border border-lumbre-brown px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-off transition hover:border-lumbre-off hover:text-white";
-
+const Navbar = ({ links = [] }) => {
   return (
     <header className="sticky top-0 z-50 border-b border-lumbre-gray/80 bg-lumbre-black/90 backdrop-blur">
       <nav
@@ -12,7 +10,7 @@ const Navbar = ({ links = [], instagramLink = "", instagramLabel = "Instagram" }
         aria-label="Primary"
       >
         <a href="#hero" className="flex items-center">
-          <img src={logo} alt="Lumbre Studio logo" className="h-10 w-auto" />
+          <img src={logo} alt="Lumbre Studio logo" className="h-10 w-auto logo-mark" />
         </a>
         <div className="flex flex-wrap items-center gap-4">
           <ul className="flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.35em] text-lumbre-off/70">
@@ -25,17 +23,7 @@ const Navbar = ({ links = [], instagramLink = "", instagramLabel = "Instagram" }
             ))}
           </ul>
           <LanguageSwitcher />
-          {instagramLink ? (
-            <a
-              className={instagramClasses}
-              href={instagramLink}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={instagramLabel}
-            >
-              {instagramLabel}
-            </a>
-          ) : null}
+          <ThemeToggle />
         </div>
       </nav>
     </header>

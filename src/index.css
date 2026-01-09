@@ -3,15 +3,41 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: dark;
+    --lumbre-black: 11 11 11;
+    --lumbre-gray: 42 42 42;
+    --lumbre-brown: 205 160 96;
+    --lumbre-off: 244 241 236;
+    --lumbre-hero-glow: rgba(42, 42, 42, 0.6);
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+    --lumbre-black: 244 241 236;
+    --lumbre-gray: 212 203 193;
+    --lumbre-brown: 166 120 70;
+    --lumbre-off: 11 11 11;
+    --lumbre-hero-glow: rgba(158, 122, 85, 0.25);
+  }
+
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-lumbre-black text-lumbre-off font-sans antialiased;
+    @apply bg-lumbre-black text-lumbre-off font-sans antialiased transition-colors duration-200;
   }
 
   a {
     @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lumbre-off;
+  }
+
+  .logo-mark {
+    filter: none;
+  }
+
+  [data-theme="light"] .logo-mark {
+    filter: invert(1) brightness(0.2);
   }
 }

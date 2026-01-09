@@ -29,7 +29,7 @@ const setLinkTag = (rel, href) => {
   link.setAttribute("href", href);
 };
 
-const LandingES = ({ instagramLink, whatsappLink }) => {
+const LandingES = ({ whatsappLink }) => {
   const pageTitle = "Lumbre Studio | C\u00f3digo que es pura lumbre.";
   const pageDescription =
     "Dise\u00f1amos software y automatizamos procesos para empresas que necesitan orden y control.";
@@ -109,10 +109,10 @@ const LandingES = ({ instagramLink, whatsappLink }) => {
       >
         Saltar al contenido principal
       </a>
-      <Navbar links={navLinks} instagramLink={instagramLink} instagramLabel="Instagram" />
+      <Navbar links={navLinks} />
       <main id="main">
         <section id="hero" className="relative overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_circle_at_top,_rgba(42,42,42,0.6),_transparent_70%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_circle_at_top,_var(--lumbre-hero-glow),_transparent_70%)]" />
           <div className="relative mx-auto grid max-w-6xl gap-12 px-6 pb-16 pt-20 md:grid-cols-[1.1fr_0.9fr] md:items-center md:pb-24 md:pt-28">
             <div>
               <p className="text-xs uppercase tracking-[0.45em] text-lumbre-brown">Estudio digital</p>
@@ -266,8 +266,6 @@ const LandingES = ({ instagramLink, whatsappLink }) => {
       </main>
       <Footer
         description="Estudio digital industrial enfocado en software, automatizaci\u00f3n y crecimiento sostenible."
-        instagramLink={instagramLink}
-        instagramLabel="Instagram"
         copyrightLabel="Todos los derechos reservados."
       />
     </div>

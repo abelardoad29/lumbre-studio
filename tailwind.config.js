@@ -5,10 +5,10 @@ export default {
     extend: {
       colors: {
         lumbre: {
-          black: "#0B0B0B",
-          gray: "#2A2A2A",
-          brown: "#6B4F3F",
-          off: "#F4F1EC",
+          black: "rgb(var(--lumbre-black) / <alpha-value>)",
+          gray: "rgb(var(--lumbre-gray) / <alpha-value>)",
+          brown: "rgb(var(--lumbre-brown) / <alpha-value>)",
+          off: "rgb(var(--lumbre-off) / <alpha-value>)",
         },
       },
       fontFamily: {

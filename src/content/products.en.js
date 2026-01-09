@@ -1,14 +1,12 @@
-// TODO: set final pricing
 export const products = [
   {
     id: "simple-website",
-    title: "Simple Website",
+    title: "Website",
     description: "Launch-ready websites built for clarity, speed, and trust.",
     tiers: [
       {
         name: "Starter",
-        price: "from $XXX",
-        timeline: "Delivery: 2-3 weeks",
+        price: "from $7,900 MXN / $499 USD",
         features: [
           "Single page",
           "Responsive layout",
@@ -22,10 +20,9 @@ export const products = [
       },
       {
         name: "Standard",
-        price: "from $XXX",
-        timeline: "Delivery: 3-4 weeks",
+        price: "from $14,900 MXN / $899 USD",
         features: [
-          "Multi-page (up to 5)",
+          "Multi-page (up to 4)",
           "Responsive layout",
           "Basic SEO",
           "Email contact form",
@@ -36,9 +33,8 @@ export const products = [
         ctaSecondary: "Email us",
       },
       {
-        name: "Growth",
-        price: "from $XXX",
-        timeline: "Delivery: 4-6 weeks",
+        name: "Pro",
+        price: "from $24,900 MXN / $1,499 USD",
         features: [
           "Multi-page (up to 8)",
           "Responsive layout",
@@ -56,7 +52,7 @@ export const products = [
     id: "custom-systems",
     title: "Custom Systems",
     description: "Tailored platforms for operations, data, and growth.",
-    priceLabel: "Under quote",
+    priceLines: ["Under quote", "Reference from $35,000 MXN / $2,000 USD"],
     features: ["Dashboards", "Databases", "Roles & permissions", "Reports", "Integrations"],
     ctaLabel: "Get a quote",
   },
@@ -64,7 +60,7 @@ export const products = [
     id: "social-automation",
     title: "Social Media Automation",
     description: "Systems that keep content consistent and measurable.",
-    priceLabel: "Under quote",
+    priceLines: ["from $3,500 MXN/mo / $249 USD/mo"],
     features: ["Content calendar", "Automation flows", "Template packs", "Reporting"],
     ctaLabel: "Get a quote",
   },
@@ -72,16 +68,8 @@ export const products = [
     id: "whatsapp-agent",
     title: "WhatsApp AI Agent + Calendar",
     description: "Lead capture and scheduling with a human handoff.",
-    priceLabel: "Under quote",
+    priceLines: ["Setup from $12,000 MXN / $799 USD", "Monthly from $1,500 MXN/mo / $99 USD/mo"],
     features: ["Calendar integration", "FAQ automation", "Lead capture", "Human handoff", "Tags & segments"],
-    ctaLabel: "Get a quote",
-  },
-  {
-    id: "workflows-integrations",
-    title: "Workflows & Integrations",
-    description: "Connect tools and keep data moving without manual work.",
-    priceLabel: "Under quote",
-    features: ["Zapier / n8n", "CRM sync", "Spreadsheets", "Email alerts"],
     ctaLabel: "Get a quote",
   },
 ];
