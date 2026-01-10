@@ -30,9 +30,9 @@ const setLinkTag = (rel, href) => {
 };
 
 const LandingES = ({ whatsappLink }) => {
-  const pageTitle = "Lumbre Studio | C\u00f3digo que es pura lumbre.";
+  const pageTitle = "Lumbre Studio | Código que es pura lumbre.";
   const pageDescription =
-    "Dise\u00f1amos software y automatizamos procesos para empresas que necesitan orden y control.";
+    "Diseñamos software y automatizamos procesos para empresas que necesitan orden y control.";
   const canonicalPath = "/es";
 
   useEffect(() => {
@@ -62,21 +62,21 @@ const LandingES = ({ whatsappLink }) => {
     },
     {
       title: "Frontend de producto",
-      description: "Interfaces r\u00e1pidas y accesibles alineadas con la marca.",
+      description: "Interfaces rápidas y accesibles alineadas con la marca.",
     },
     {
-      title: "Automatizaci\u00f3n e integraciones",
+      title: "Automatización e integraciones",
       description: "Conectamos herramientas y eliminamos procesos manuales.",
     },
     {
       title: "Dashboards y reportes",
-      description: "Visibilidad operativa con m\u00e9tricas claras.",
+      description: "Visibilidad operativa con métricas claras.",
     },
   ];
 
   const processSteps = [
     {
-      title: "Inmersi\u00f3n",
+      title: "Inmersión",
       description: "Entendemos el negocio, usuarios y realidad operativa.",
     },
     {
@@ -84,11 +84,11 @@ const LandingES = ({ whatsappLink }) => {
       description: "Definimos stack, alcance y plan de entrega.",
     },
     {
-      title: "Construcci\u00f3n",
+      title: "Construcción",
       description: "Iteramos con entregas claras y avance medible.",
     },
     {
-      title: "Optimizaci\u00f3n",
+      title: "Optimización",
       description: "Mejoramos performance, estabilidad y escala.",
     },
   ];
@@ -119,9 +119,9 @@ const LandingES = ({ whatsappLink }) => {
               <h1 className="mt-4 text-4xl font-semibold tracking-tight text-lumbre-off md:text-6xl">
                 Software industrial para equipos que necesitan claridad.
               </h1>
-              <p className="mt-6 text-lg text-lumbre-off/80">C\u00f3digo que es pura lumbre.</p>
+              <p className="mt-6 text-lg text-lumbre-off/80">Código que es pura lumbre.</p>
               <p className="mt-4 text-sm text-lumbre-off/60">
-                Dise\u00f1amos software y automatizamos procesos para empresas que necesitan orden y
+                Diseñamos software y automatizamos procesos para empresas que necesitan orden y
                 control.
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -144,7 +144,7 @@ const LandingES = ({ whatsappLink }) => {
                 <div>
                   <p className="text-xs uppercase tracking-[0.3em] text-lumbre-off/60">Enfoque</p>
                   <p className="mt-3 text-lg font-semibold text-lumbre-off">
-                    Claridad, automatizaci\u00f3n y control operativo.
+                    Claridad, automatización y control operativo.
                   </p>
                 </div>
                 <div className="grid gap-6 text-sm text-lumbre-off/70">
@@ -152,10 +152,10 @@ const LandingES = ({ whatsappLink }) => {
                     Roadmaps alineados a crecimiento y equipos internos.
                   </div>
                   <div className="rounded-2xl border border-lumbre-gray/70 bg-lumbre-black/40 p-4">
-                    Implementaci\u00f3n limpia con documentaci\u00f3n y handoff.
+                    Implementación limpia con documentación y handoff.
                   </div>
                   <div className="rounded-2xl border border-lumbre-gray/70 bg-lumbre-black/40 p-4">
-                    Sistemas de dise\u00f1o preparados para escalar.
+                    Sistemas de diseño preparados para escalar.
                   </div>
                 </div>
               </div>
@@ -166,12 +166,12 @@ const LandingES = ({ whatsappLink }) => {
         <Section
           id="problema"
           eyebrow="Problema"
-          title="La brecha entre visi\u00f3n y ejecuci\u00f3n"
+          title="La brecha entre visión y ejecución"
           subtitle="Las operaciones necesitan velocidad sin perder orden, pero los procesos tradicionales frenan."
         >
           <div className="grid gap-10 md:grid-cols-2">
             <p className="text-base text-lumbre-off/80">
-              Lumbre Studio trabaja como equipo senior extendido: alineamos estrategia y tecnolog\u00eda
+              Lumbre Studio trabaja como equipo senior extendido: alineamos estrategia y tecnología
               para que cada release tenga claridad y un impacto medible.
             </p>
             <ul className="space-y-4 text-sm text-lumbre-off/70">
@@ -214,7 +214,7 @@ const LandingES = ({ whatsappLink }) => {
           id="proceso"
           eyebrow="Proceso"
           title="Un flujo enfocado para equipos que no pueden detenerse"
-          subtitle="Metodolog\u00eda compacta con entregables visibles y checkpoints."
+          subtitle="Metodología compacta con entregables visibles y checkpoints."
         >
           <ol className="grid gap-6 md:grid-cols-2">
             {processSteps.map((step, index) => (
@@ -232,11 +232,11 @@ const LandingES = ({ whatsappLink }) => {
         <ProductsSection
           id="productos"
           eyebrow="Productos"
-          title="Productos dise\u00f1ados para orden y control"
+          title="Productos diseñados para orden y control"
           subtitle="Paquetes y servicios para llevar operaciones a otro nivel."
           products={products}
           scriptsTitle="Scripts y herramientas"
-          scriptsSubtitle="Automatizaciones puntuales para eliminar fricci\u00f3n repetitiva."
+          scriptsSubtitle="Automatizaciones puntuales para eliminar fricción repetitiva."
           scripts={scriptsAndTools}
           mailtoLink={MAILTO_LINK}
         />
@@ -244,8 +244,8 @@ const LandingES = ({ whatsappLink }) => {
         <Section
           id="contacto"
           eyebrow="Contacto"
-          title="Listos para ordenar tu operaci\u00f3n"
-          subtitle="Cu\u00e9ntanos tus objetivos y definimos el alcance ideal."
+          title="Listos para ordenar tu operación"
+          subtitle="Cuéntanos tus objetivos y definimos el alcance ideal."
           className="bg-lumbre-gray/20"
         >
           <div className="flex flex-col gap-4 sm:flex-row">
@@ -265,7 +265,7 @@ const LandingES = ({ whatsappLink }) => {
         </Section>
       </main>
       <Footer
-        description="Estudio digital industrial enfocado en software, automatizaci\u00f3n y crecimiento sostenible."
+        description="Estudio digital industrial enfocado en software, automatización y crecimiento sostenible."
         copyrightLabel="Todos los derechos reservados."
       />
     </div>

@@ -1,6 +1,6 @@
 # Lumbre Studio Landing
 
-Landing biling&uuml;e (EN/ES) para Lumbre Studio, construida con React + Vite + Tailwind.
+Landing bilingüe (EN/ES) para Lumbre Studio, construida con React + Vite + Tailwind.
 
 ## Requisitos
 
@@ -14,18 +14,18 @@ npm install
 npm run dev
 ```
 
-## Build de producci&oacute;n
+## Build de producción
 
 ```bash
 npm run build
 ```
 
-## Rutas (biling&uuml;e)
+## Rutas (bilingüe)
 
-- `/` = Ingl&eacute;s (EN)
-- `/es` = Espa&ntilde;ol (ES)
+- `/` = Inglés (EN)
+- `/es` = Español (ES)
 
-## Idioma autom&aacute;tico
+## Idioma automático
 
 - Detecta idioma con `navigator.language` / `navigator.languages`.
 - Guarda preferencia manual en `localStorage` (`langPref`).
@@ -35,13 +35,13 @@ npm run build
 - Copys por idioma: `src/pages/LandingEN.jsx` y `src/pages/LandingES.jsx`.
 - Productos y precios: `src/content/products.en.js` y `src/content/products.es.js`.
 - Links editables (Instagram/WhatsApp): `INSTAGRAM_URL` y `WHATSAPP_LINK` en `src/App.jsx`.
-- Bot&oacute;n flotante de Instagram: `src/components/FloatingInstagramButton.jsx`.
+- Botón flotante de Instagram: `src/components/FloatingInstagramButton.jsx`.
 
 ## Deploy en Vercel
 
 1. Sube este repo a GitHub, GitLab o Bitbucket.
 2. Entra a Vercel y crea un nuevo proyecto desde el repo.
-3. Vercel detecta Vite autom&aacute;ticamente. Build command: `npm run build`. Output: `dist`.
+3. Vercel detecta Vite automáticamente. Build command: `npm run build`. Output: `dist`.
 4. Asegura fallback para SPA (para rutas como `/es`). Puedes usar `vercel.json` con rewrites.
 5. Haz deploy.
 
@@ -53,7 +53,7 @@ npm run build
 
 Sustituye los archivos por los assets reales manteniendo los mismos nombres.
 
-## Configuraci&oacute;n de contacto
+## Configuración de contacto
 
 - Email: `contacto@lumbrestudio.com`
 - WhatsApp: actualiza `WHATSAPP_LINK` en `src/App.jsx`
