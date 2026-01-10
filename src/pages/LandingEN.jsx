@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Section from "../components/Section";
 import ProductsSection from "../components/ProductsSection";
 import Footer from "../components/Footer";
 import { products, scriptsAndTools } from "../content/products.en.js";
+import { useActiveSection } from "../hooks/useActiveSection";
 
 const MAILTO_LINK = "mailto:contacto@lumbrestudio.com?subject=Quote%20-%20Lumbre%20Studio";
 
@@ -29,9 +30,9 @@ const setLinkTag = (rel, href) => {
 };
 
 const LandingEN = ({ whatsappLink }) => {
-  const pageTitle = "Lumbre Studio | Code that's pure fire.";
+  const pageTitle = "Lumbre Studio | Premium software and automation";
   const pageDescription =
-    "We design software and automate processes for companies that need order and control.";
+    "We build custom software, automation, and integrations for teams that need order and control.";
   const canonicalPath = "/";
 
   useEffect(() => {
@@ -54,51 +55,246 @@ const LandingEN = ({ whatsappLink }) => {
   const whatsappReady = Boolean(whatsappLink);
   const whatsappButtonClass = `${secondaryButton} ${whatsappReady ? "" : "pointer-events-none opacity-50"}`;
 
+  const navLinks = [
+    { label: "Services", href: "#services" },
+    { label: "Cases", href: "#cases" },
+    { label: "Process", href: "#process" },
+    { label: "FAQs", href: "#faqs" },
+    { label: "Contact", href: "#contact" },
+  ];
+
+  const activeSection = useActiveSection(["services", "cases", "process", "faqs", "contact"]);
+
   const services = [
     {
-      title: "Strategy & discovery",
-      description: "Define scope, KPIs, and architecture before build.",
+      title: "Automation and AI",
+      description: "Smart workflows that reduce operational friction.",
+      bullets: ["Chatbots and assistants", "Automation and integrations"],
+      icon: (
+        <svg
+          className="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="6" cy="6" r="2" />
+          <circle cx="18" cy="6" r="2" />
+          <circle cx="6" cy="18" r="2" />
+          <circle cx="18" cy="18" r="2" />
+          <path d="M8 6h8M6 8v8M18 8v8M8 18h8" />
+        </svg>
+      ),
     },
     {
-      title: "Frontend systems",
-      description: "Fast, accessible interfaces aligned with your brand.",
+      title: "Web and App Development",
+      description: "Fast, clean, and scalable digital experiences.",
+      bullets: ["Premium frontends", "MVPs ready to launch"],
+      icon: (
+        <svg
+          className="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="M3 9h18M8 19h8" />
+        </svg>
+      ),
     },
     {
-      title: "Automation & integrations",
-      description: "Connect tools and remove manual steps across teams.",
+      title: "Custom software",
+      description: "Internal systems built to keep critical processes ordered.",
+      bullets: ["Dashboards and reporting", "Roles and permissions"],
+      icon: (
+        <svg
+          className="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 4l8 4-8 4-8-4 8-4Z" />
+          <path d="M4 12l8 4 8-4" />
+          <path d="M4 16l8 4 8-4" />
+        </svg>
+      ),
     },
     {
-      title: "Dashboards & reporting",
-      description: "Operational visibility with clear metrics.",
+      title: "Integrations and APIs",
+      description: "Connect tools and centralize critical data.",
+      bullets: ["CRM, ERP, and payments", "Zapier / n8n"],
+      icon: (
+        <svg
+          className="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M10 13a3 3 0 0 1 0-4l2-2a3 3 0 0 1 4 4l-1 1" />
+          <path d="M14 11a3 3 0 0 1 0 4l-2 2a3 3 0 0 1-4-4l1-1" />
+        </svg>
+      ),
+    },
+  ];
+
+  const trustIndicators = [
+    {
+      label: "Projects delivered",
+      value: "TODO",
+      note: "Replace with real data.",
+    },
+    {
+      label: "Average delivery time",
+      value: "TODO",
+      note: "Update with real metrics.",
+    },
+    {
+      label: "Support and evolution",
+      value: "TODO",
+      note: "Define service details.",
+    },
+  ];
+
+  const testimonials = [
+    {
+      quote: "TODO: Add a real client testimonial.",
+      author: "TODO: Name and role.",
+      company: "TODO: Company.",
+    },
+    {
+      quote: "TODO: Add a real client testimonial.",
+      author: "TODO: Name and role.",
+      company: "TODO: Company.",
+    },
+  ];
+
+  const caseStudies = [
+    {
+      title: "Ordered internal operations",
+      problem: "Fragmented processes and manual reporting.",
+      solution: "Built a unified system with key automations.",
+      result: "TODO: Add real impact metrics.",
+    },
+    {
+      title: "Better lead follow-up",
+      problem: "Leads were lost and tracking was inconsistent.",
+      solution: "Integrated CRM, forms, and automated alerts.",
+      result: "TODO: Add real improvement metrics.",
+    },
+    {
+      title: "Automated support",
+      problem: "Repeated questions overloaded the team.",
+      solution: "Implemented WhatsApp flows and smart FAQs.",
+      result: "TODO: Add real reduction metrics.",
     },
   ];
 
   const processSteps = [
     {
-      title: "Immersion",
-      description: "Understand the business, users, and operational reality.",
+      title: "Discovery",
+      description: "We align on goals, processes, and success metrics.",
     },
     {
-      title: "Architecture",
-      description: "Define the stack, scope, and delivery plan.",
+      title: "Proposal and plan",
+      description: "We define scope, deliverables, and timeline.",
     },
     {
-      title: "Build",
-      description: "Ship in focused iterations with measurable progress.",
+      title: "Build and delivery",
+      description: "We ship in iterations with visible checkpoints.",
     },
     {
-      title: "Optimization",
-      description: "Improve performance, reliability, and scale.",
+      title: "Support and improvement",
+      description: "Ongoing refinement to sustain results.",
     },
   ];
 
-  const navLinks = [
-    { label: "Problem", href: "#problem" },
-    { label: "Services", href: "#services" },
-    { label: "Process", href: "#process" },
-    { label: "Products", href: "#products" },
-    { label: "Contact", href: "#contact" },
+  const faqItems = [
+    {
+      question: "How long does a project take?",
+      answer:
+        "It depends on scope. During discovery we set realistic timelines and delivery checkpoints.",
+    },
+    {
+      question: "What do you need from my team?",
+      answer:
+        "Access to key information, a point of contact, and fast decision-making for critical choices.",
+    },
+    {
+      question: "Do you offer maintenance?",
+      answer:
+        "Yes. We provide ongoing support and monitoring after launch when needed.",
+    },
+    {
+      question: "Do you integrate with WhatsApp, CRM, or ERP?",
+      answer:
+        "Yes. We integrate with existing tools and APIs to centralize data and automate workflows.",
+    },
+    {
+      question: "How do you price projects?",
+      answer:
+        "We price by scope and complexity. You get a clear plan with phases and a transparent budget.",
+    },
   ];
+
+  const [activeFaq, setActiveFaq] = useState("");
+  const [formValues, setFormValues] = useState({
+    name: "",
+    email: "",
+    message: "",
+    projectType: "",
+  });
+  const [formStatus, setFormStatus] = useState("idle");
+  const [formErrors, setFormErrors] = useState({});
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    if (!formValues.name.trim()) {
+      errors.name = "Please enter your name.";
+    }
+    if (!formValues.email.trim()) {
+      errors.email = "Please enter your email.";
+    } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formValues.email)) {
+      errors.email = "Invalid email.";
+    }
+    if (!formValues.message.trim()) {
+      errors.message = "Tell us about your project.";
+    }
+    return errors;
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const errors = validateForm();
+    setFormErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      setFormStatus("error");
+      return;
+    }
+    setFormStatus("loading");
+    setTimeout(() => {
+      setFormStatus("success");
+    }, 800);
+  };
 
   return (
     <div className="min-h-screen">
@@ -108,34 +304,35 @@ const LandingEN = ({ whatsappLink }) => {
       >
         Skip to main content
       </a>
-      <Navbar links={navLinks} />
-      <main id="main">
+      <Navbar
+        links={navLinks}
+        ctaLabel="Schedule a call"
+        ctaHref="#contact"
+        activeId={activeSection}
+      />
+      <main id="main" className="pb-24">
         <section id="hero" className="relative overflow-hidden">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_circle_at_top,_var(--lumbre-hero-glow),_transparent_70%)]" />
           <div className="relative mx-auto grid max-w-6xl gap-12 px-6 pb-16 pt-20 md:grid-cols-[1.1fr_0.9fr] md:items-center md:pb-24 md:pt-28">
             <div>
-              <p className="text-xs uppercase tracking-[0.45em] text-lumbre-brown">Digital studio</p>
+              <p className="text-xs uppercase tracking-[0.45em] text-lumbre-brown">Code that's pure fire.</p>
               <h1 className="mt-4 text-4xl font-semibold tracking-tight text-lumbre-off md:text-6xl">
-                Industrial-grade software for teams that need clarity.
+                Custom software and automation for teams that need order and control.
               </h1>
-              <p className="mt-6 text-lg text-lumbre-off/80">Code that's pure fire.</p>
-              <p className="mt-4 text-sm text-lumbre-off/60">
-                We design software and automate processes for companies that need order and control.
+              <p className="mt-5 text-lg text-lumbre-off/80">
+                We design systems, integrations, and AI-driven workflows to reduce friction and improve decisions.
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                <a className={primaryButton} href={MAILTO_LINK}>
-                  Get a quote
+                <a className={primaryButton} href="#contact">
+                  Schedule a call
                 </a>
-                <a
-                  className={whatsappButtonClass}
-                  href={whatsappReady ? whatsappLink : "#"}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-disabled={!whatsappReady}
-                >
-                  WhatsApp
+                <a className={secondaryButton} href="#services">
+                  View services
                 </a>
               </div>
+              <p className="mt-3 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">
+                Fast response | No commitment
+              </p>
             </div>
             <div className="rounded-3xl border border-lumbre-gray/80 bg-lumbre-gray/40 p-8">
               <div className="space-y-8">
@@ -147,13 +344,13 @@ const LandingEN = ({ whatsappLink }) => {
                 </div>
                 <div className="grid gap-6 text-sm text-lumbre-off/70">
                   <div className="rounded-2xl border border-lumbre-gray/70 bg-lumbre-black/40 p-4">
-                    Roadmaps aligned to growth and internal teams.
+                    Roadmaps with measurable deliverables.
                   </div>
                   <div className="rounded-2xl border border-lumbre-gray/70 bg-lumbre-black/40 p-4">
-                    Clean implementation with documentation and handoff.
+                    Clean architecture with documentation and handoff.
                   </div>
                   <div className="rounded-2xl border border-lumbre-gray/70 bg-lumbre-black/40 p-4">
-                    Design systems built to scale without rework.
+                    Systems ready to scale without friction.
                   </div>
                 </div>
               </div>
@@ -162,38 +359,10 @@ const LandingEN = ({ whatsappLink }) => {
         </section>
 
         <Section
-          id="problem"
-          eyebrow="Problem"
-          title="The gap between strategy and execution"
-          subtitle="Operations need speed without losing order, but traditional workflows slow delivery."
-        >
-          <div className="grid gap-10 md:grid-cols-2">
-            <p className="text-base text-lumbre-off/80">
-              Lumbre Studio works as a senior extension of your team: we align strategy and technology
-              so every release brings clarity and measurable impact.
-            </p>
-            <ul className="space-y-4 text-sm text-lumbre-off/70">
-              <li className="flex items-start gap-3">
-                <span className="mt-2 h-2 w-2 rounded-full bg-lumbre-brown" aria-hidden="true" />
-                Projects that stretch timelines and lose focus.
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-2 h-2 w-2 rounded-full bg-lumbre-brown" aria-hidden="true" />
-                Disconnected tools and manual workflows.
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-2 h-2 w-2 rounded-full bg-lumbre-brown" aria-hidden="true" />
-                Teams overloaded without a clear delivery path.
-              </li>
-            </ul>
-          </div>
-        </Section>
-
-        <Section
           id="services"
           eyebrow="Services"
-          title="Clear support across product and operations"
-          subtitle="Select the level of support you need, from strategy to full delivery."
+          title="Services for teams that cannot slow down"
+          subtitle="Pick the area to solve first and we will build the right plan."
         >
           <div className="grid gap-6 md:grid-cols-2">
             {services.map((service) => (
@@ -201,8 +370,91 @@ const LandingEN = ({ whatsappLink }) => {
                 key={service.title}
                 className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-gray/30 p-6 transition hover:border-lumbre-brown/80"
               >
-                <h3 className="text-lg font-semibold text-lumbre-off">{service.title}</h3>
-                <p className="mt-3 text-sm text-lumbre-off/70">{service.description}</p>
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-lumbre-brown/60 bg-lumbre-black/40 text-lumbre-brown">
+                    {service.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-lumbre-off">{service.title}</h3>
+                    <p className="mt-2 text-sm text-lumbre-off/70">{service.description}</p>
+                  </div>
+                </div>
+                <ul className="mt-4 space-y-2 text-sm text-lumbre-off/70">
+                  {service.bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-2">
+                      <span className="mt-2 h-2 w-2 rounded-full bg-lumbre-brown" aria-hidden="true" />
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  className="mt-5 inline-flex text-xs uppercase tracking-[0.3em] text-lumbre-brown transition hover:text-lumbre-off"
+                  href="#contact"
+                >
+                  Learn more
+                </a>
+              </article>
+            ))}
+          </div>
+        </Section>
+
+        <Section
+          id="trust"
+          eyebrow="Trust"
+          title="Teams trust Lumbre Studio"
+          subtitle="Confidence indicators (placeholders to update)."
+        >
+          <div className="grid gap-6 md:grid-cols-3">
+            {trustIndicators.map((item) => (
+              <div key={item.label} className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-gray/30 p-6">
+                <p className="text-xs uppercase tracking-[0.3em] text-lumbre-off/60">{item.label}</p>
+                <p className="mt-3 text-2xl font-semibold text-lumbre-off">{item.value}</p>
+                <p className="mt-2 text-xs text-lumbre-off/60">{item.note}</p>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        <Section
+          id="testimonials"
+          eyebrow="Testimonials"
+          title="What clients say (TODO)"
+          subtitle="Replace with real testimonials before publishing."
+        >
+          <div className="grid gap-6 md:grid-cols-2">
+            {testimonials.map((item, index) => (
+              <figure
+                key={`${item.author}-${index}`}
+                className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-gray/30 p-6"
+              >
+                <blockquote className="text-sm text-lumbre-off/80">"{item.quote}"</blockquote>
+                <figcaption className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">
+                  {item.author} - {item.company}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </Section>
+
+        <Section
+          id="cases"
+          eyebrow="Cases"
+          title="Case studies (TODO)"
+          subtitle="Problem to solution to results. Replace with real data."
+        >
+          <div className="grid gap-6 lg:grid-cols-3">
+            {caseStudies.map((item) => (
+              <article
+                key={item.title}
+                className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-gray/30 p-6"
+              >
+                <h3 className="text-lg font-semibold text-lumbre-off">{item.title}</h3>
+                <p className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">Problem</p>
+                <p className="mt-2 text-sm text-lumbre-off/70">{item.problem}</p>
+                <p className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">What we did</p>
+                <p className="mt-2 text-sm text-lumbre-off/70">{item.solution}</p>
+                <p className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">Result</p>
+                <p className="mt-2 text-sm text-lumbre-off/70">{item.result}</p>
               </article>
             ))}
           </div>
@@ -211,12 +463,15 @@ const LandingEN = ({ whatsappLink }) => {
         <Section
           id="process"
           eyebrow="Process"
-          title="A focused flow for teams that cannot pause"
-          subtitle="Compact methodology with visible milestones and delivery checkpoints."
+          title="How we work"
+          subtitle="A clear methodology with visible deliverables."
         >
           <ol className="grid gap-6 md:grid-cols-2">
             {processSteps.map((step, index) => (
-              <li key={step.title} className="rounded-2xl border border-lumbre-gray/70 bg-lumbre-black/40 p-6">
+              <li
+                key={step.title}
+                className="rounded-2xl border border-lumbre-gray/70 bg-lumbre-black/40 p-6"
+              >
                 <p className="text-xs uppercase tracking-[0.35em] text-lumbre-brown">
                   Step {String(index + 1).padStart(2, "0")}
                 </p>
@@ -233,37 +488,173 @@ const LandingEN = ({ whatsappLink }) => {
           title="Products built for order and control"
           subtitle="Packages and services designed to move operations forward."
           products={products}
-          scriptsTitle="Scripts & Tools"
-          scriptsSubtitle="Small automations that remove recurring friction."
+          scriptsTitle="Scripts and tools"
+          scriptsSubtitle="Focused automations that remove recurring friction."
           scripts={scriptsAndTools}
           mailtoLink={MAILTO_LINK}
         />
 
         <Section
+          id="faqs"
+          eyebrow="FAQs"
+          title="Common questions"
+          subtitle="Clear answers to move forward with confidence."
+        >
+          <div className="divide-y divide-lumbre-gray/70 rounded-2xl border border-lumbre-gray/70 bg-lumbre-black/40">
+            {faqItems.map((item, index) => {
+              const isOpen = activeFaq === `faq-${index}`;
+              const panelId = `faq-panel-${index}`;
+              return (
+                <div key={item.question} className="p-6">
+                  <button
+                    className="flex w-full items-center justify-between gap-4 text-left text-sm font-semibold text-lumbre-off"
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => {
+                      const next = isOpen ? "" : `faq-${index}`;
+                      setActiveFaq(next);
+                    }}
+                  >
+                    <span>{item.question}</span>
+                    <span className="text-lumbre-brown">{isOpen ? "-" : "+"}</span>
+                  </button>
+                  <div
+                    id={panelId}
+                    className={`mt-3 text-sm text-lumbre-off/70 ${isOpen ? "" : "hidden"}`}
+                  >
+                    {item.answer}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Section>
+
+        <Section
           id="contact"
           eyebrow="Contact"
-          title="Ready to bring order to your operations"
-          subtitle="Share your goals and we will shape the right scope."
+          title="Schedule a call and define the scope"
+          subtitle="Share your goals and we will shape the right plan."
           className="bg-lumbre-gray/20"
         >
-          <div className="flex flex-col gap-4 sm:flex-row">
-            <a className={primaryButton} href={MAILTO_LINK}>
-              Get a quote
-            </a>
-            <a
-              className={whatsappButtonClass}
-              href={whatsappReady ? whatsappLink : "#"}
-              target="_blank"
-              rel="noreferrer"
-              aria-disabled={!whatsappReady}
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+            <form
+              className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-black/40 p-6"
+              onSubmit={handleSubmit}
             >
-              WhatsApp
-            </a>
+              <div className="grid gap-4 md:grid-cols-2">
+                <label className="flex flex-col gap-2 text-xs uppercase tracking-[0.2em] text-lumbre-off/60">
+                  Name
+                  <input
+                    className="rounded-xl border border-lumbre-gray/70 bg-transparent px-4 py-3 text-sm text-lumbre-off outline-none transition focus:border-lumbre-off"
+                    type="text"
+                    name="name"
+                    value={formValues.name}
+                    onChange={handleInputChange}
+                    placeholder="Your name"
+                  />
+                  {formErrors.name ? <span className="text-xs text-red-400">{formErrors.name}</span> : null}
+                </label>
+                <label className="flex flex-col gap-2 text-xs uppercase tracking-[0.2em] text-lumbre-off/60">
+                  Email
+                  <input
+                    className="rounded-xl border border-lumbre-gray/70 bg-transparent px-4 py-3 text-sm text-lumbre-off outline-none transition focus:border-lumbre-off"
+                    type="email"
+                    name="email"
+                    value={formValues.email}
+                    onChange={handleInputChange}
+                    placeholder="you@company.com"
+                  />
+                  {formErrors.email ? <span className="text-xs text-red-400">{formErrors.email}</span> : null}
+                </label>
+              </div>
+              <label className="mt-4 flex flex-col gap-2 text-xs uppercase tracking-[0.2em] text-lumbre-off/60">
+                Project type (optional)
+                <select
+                  className="rounded-xl border border-lumbre-gray/70 bg-transparent px-4 py-3 text-sm text-lumbre-off outline-none transition focus:border-lumbre-off"
+                  name="projectType"
+                  value={formValues.projectType}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select one</option>
+                  <option value="automation">Automation / AI</option>
+                  <option value="software">Custom software</option>
+                  <option value="web">Web / App</option>
+                  <option value="integrations">Integrations</option>
+                </select>
+              </label>
+              <label className="mt-4 flex flex-col gap-2 text-xs uppercase tracking-[0.2em] text-lumbre-off/60">
+                Message
+                <textarea
+                  className="min-h-[140px] rounded-xl border border-lumbre-gray/70 bg-transparent px-4 py-3 text-sm text-lumbre-off outline-none transition focus:border-lumbre-off"
+                  name="message"
+                  value={formValues.message}
+                  onChange={handleInputChange}
+                  placeholder="Describe your goal or challenge."
+                />
+                {formErrors.message ? (
+                  <span className="text-xs text-red-400">{formErrors.message}</span>
+                ) : null}
+              </label>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <button className={primaryButton} type="submit" disabled={formStatus === "loading"}>
+                  {formStatus === "loading" ? "Sending..." : "Send"}
+                </button>
+                {formStatus === "success" ? (
+                  <p className="text-xs uppercase tracking-[0.3em] text-lumbre-brown">
+                    Thanks, we will contact you soon.
+                  </p>
+                ) : null}
+                {formStatus === "error" ? (
+                  <p className="text-xs uppercase tracking-[0.3em] text-red-400">
+                    Please review the highlighted fields.
+                  </p>
+                ) : null}
+              </div>
+            </form>
+
+            <div className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-gray/30 p-6">
+              <p className="text-xs uppercase tracking-[0.3em] text-lumbre-off/60">Direct contact</p>
+              <p className="mt-3 text-lg font-semibold text-lumbre-off">Let's talk today.</p>
+              <p className="mt-3 text-sm text-lumbre-off/70">
+                Prefer a direct channel? Use the options below.
+              </p>
+              <div className="mt-6 flex flex-col gap-3">
+                <a className={secondaryButton} href={MAILTO_LINK}>
+                  contacto@lumbrestudio.com
+                </a>
+                <a
+                  className={whatsappButtonClass}
+                  href={whatsappReady ? whatsappLink : "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-disabled={!whatsappReady}
+                >
+                  WhatsApp
+                </a>
+              </div>
+              <p className="mt-4 text-xs text-lumbre-off/60">
+                We can also schedule a call around your availability.
+              </p>
+            </div>
           </div>
         </Section>
       </main>
       <Footer
-        description="Industrial digital studio focused on software, automation, and sustainable growth."
+        description="Premium software studio focused on automation, integrations, and operational clarity."
+        links={navLinks}
+        legalLinks={[
+          { label: "Privacy (TODO)", href: "/privacy" },
+          { label: "Terms (TODO)", href: "/terms" },
+        ]}
+        socialLinks={[{ label: "Instagram", href: "https://instagram.com/lumbre.studiomx" }]}
+        labels={{
+          navLabel: "Navigation",
+          legalLabel: "Legal",
+          connectionsLabel: "Connect",
+          tagline: "Premium software studio for teams that need control.",
+        }}
         copyrightLabel="All rights reserved."
       />
     </div>
