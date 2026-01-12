@@ -262,6 +262,15 @@ const LandingES = ({ whatsappLink }) => {
     },
   ];
 
+  const serviceOptions = [
+    { value: "", label: "Selecciona una opción" },
+    { value: "website", label: "Website" },
+    { value: "custom-systems", label: "Sistemas a Medida" },
+    { value: "social-automation", label: "Automatización de Redes Sociales" },
+    { value: "whatsapp-agent", label: "Agente WhatsApp IA + Calendario" },
+    { value: "otro", label: "Otro" },
+  ];
+
   const [activeFaq, setActiveFaq] = useState("");
   const [formValues, setFormValues] = useState({
     name: "",
@@ -275,6 +284,17 @@ const LandingES = ({ whatsappLink }) => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
+    if (formStatus !== "idle") {
+      setFormStatus("idle");
+    }
+    setFormErrors((prev) => {
+      if (!prev[name]) {
+        return prev;
+      }
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
   };
 
   const validateForm = () => {
@@ -293,18 +313,36 @@ const LandingES = ({ whatsappLink }) => {
     return errors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const errors = validateForm();
     setFormErrors(errors);
     if (Object.keys(errors).length > 0) {
-      setFormStatus("error");
       return;
     }
     setFormStatus("loading");
-    setTimeout(() => {
+    try {
+      const selectedService =
+        serviceOptions.find((option) => option.value === formValues.projectType)?.label || "";
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formValues.name,
+          email: formValues.email,
+          message: formValues.message,
+          service: selectedService,
+        }),
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || !payload.ok) {
+        setFormStatus("error");
+        return;
+      }
       setFormStatus("success");
-    }, 800);
+    } catch (error) {
+      setFormStatus("error");
+    }
   };
 
   return (
@@ -572,24 +610,11 @@ const LandingES = ({ whatsappLink }) => {
                   value={formValues.projectType}
                   onChange={handleInputChange}
                 >
-                  <option className="bg-white text-black" value="">
-                    Selecciona una opción
-                  </option>
-                  <option className="bg-white text-black" value="website">
-                    Website
-                  </option>
-                  <option className="bg-white text-black" value="custom-systems">
-                    Sistemas a Medida
-                  </option>
-                  <option className="bg-white text-black" value="social-automation">
-                    Automatización de Redes Sociales
-                  </option>
-                  <option className="bg-white text-black" value="whatsapp-agent">
-                    Agente WhatsApp IA + Calendario
-                  </option>
-                  <option className="bg-white text-black" value="otro">
-                    Otro
-                  </option>
+                  {serviceOptions.map((option) => (
+                    <option key={option.value || "placeholder"} className="bg-white text-black" value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
               </label>
               <label className="mt-4 flex flex-col gap-2 text-xs uppercase tracking-[0.2em] text-lumbre-off/60">
@@ -611,12 +636,12 @@ const LandingES = ({ whatsappLink }) => {
                 </button>
                 {formStatus === "success" ? (
                   <p className="text-xs uppercase tracking-[0.3em] text-lumbre-brown">
-                    Gracias, te contactaremos pronto.
+                    Gracias por contactarnos. Te responderemos a la brevedad.
                   </p>
                 ) : null}
                 {formStatus === "error" ? (
                   <p className="text-xs uppercase tracking-[0.3em] text-red-400">
-                    Revisa los campos marcados.
+                    Ocurrió un error. Intenta nuevamente o escríbenos directamente.
                   </p>
                 ) : null}
               </div>

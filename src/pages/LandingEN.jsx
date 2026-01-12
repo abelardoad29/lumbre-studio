@@ -262,6 +262,15 @@ const LandingEN = ({ whatsappLink }) => {
     },
   ];
 
+  const serviceOptions = [
+    { value: "", label: "Select one" },
+    { value: "website", label: "Website" },
+    { value: "custom-systems", label: "Custom Systems" },
+    { value: "social-automation", label: "Social Media Automation" },
+    { value: "whatsapp-agent", label: "WhatsApp AI Agent + Calendar" },
+    { value: "other", label: "Other" },
+  ];
+
   const [activeFaq, setActiveFaq] = useState("");
   const [formValues, setFormValues] = useState({
     name: "",
@@ -275,6 +284,17 @@ const LandingEN = ({ whatsappLink }) => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
+    if (formStatus !== "idle") {
+      setFormStatus("idle");
+    }
+    setFormErrors((prev) => {
+      if (!prev[name]) {
+        return prev;
+      }
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
   };
 
   const validateForm = () => {
@@ -293,18 +313,36 @@ const LandingEN = ({ whatsappLink }) => {
     return errors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const errors = validateForm();
     setFormErrors(errors);
     if (Object.keys(errors).length > 0) {
-      setFormStatus("error");
       return;
     }
     setFormStatus("loading");
-    setTimeout(() => {
+    try {
+      const selectedService =
+        serviceOptions.find((option) => option.value === formValues.projectType)?.label || "";
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formValues.name,
+          email: formValues.email,
+          message: formValues.message,
+          service: selectedService,
+        }),
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || !payload.ok) {
+        setFormStatus("error");
+        return;
+      }
       setFormStatus("success");
-    }, 800);
+    } catch (error) {
+      setFormStatus("error");
+    }
   };
 
   return (
@@ -577,24 +615,11 @@ const LandingEN = ({ whatsappLink }) => {
                   value={formValues.projectType}
                   onChange={handleInputChange}
                 >
-                  <option className="bg-white text-black" value="">
-                    Select one
-                  </option>
-                  <option className="bg-white text-black" value="website">
-                    Website
-                  </option>
-                  <option className="bg-white text-black" value="custom-systems">
-                    Custom Systems
-                  </option>
-                  <option className="bg-white text-black" value="social-automation">
-                    Social Media Automation
-                  </option>
-                  <option className="bg-white text-black" value="whatsapp-agent">
-                    WhatsApp AI Agent + Calendar
-                  </option>
-                  <option className="bg-white text-black" value="other">
-                    Other
-                  </option>
+                  {serviceOptions.map((option) => (
+                    <option key={option.value || "placeholder"} className="bg-white text-black" value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
               </label>
               <label className="mt-4 flex flex-col gap-2 text-xs uppercase tracking-[0.2em] text-lumbre-off/60">
@@ -616,12 +641,12 @@ const LandingEN = ({ whatsappLink }) => {
                 </button>
                 {formStatus === "success" ? (
                   <p className="text-xs uppercase tracking-[0.3em] text-lumbre-brown">
-                    Thanks, we will contact you soon.
+                    Thanks for reaching out. We'll get back to you shortly.
                   </p>
                 ) : null}
                 {formStatus === "error" ? (
                   <p className="text-xs uppercase tracking-[0.3em] text-red-400">
-                    Please review the highlighted fields.
+                    Something went wrong. Please try again or email us directly.
                   </p>
                 ) : null}
               </div>
