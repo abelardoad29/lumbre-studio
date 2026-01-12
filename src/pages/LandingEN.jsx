@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Section from "../components/Section";
 import ProductsSection from "../components/ProductsSection";
 import Footer from "../components/Footer";
+import TrustSection from "../components/TrustSection";
 import { products, scriptsAndTools } from "../content/products.en.js";
 import { useActiveSection } from "../hooks/useActiveSection";
 
@@ -57,13 +58,14 @@ const LandingEN = ({ whatsappLink }) => {
 
   const navLinks = [
     { label: "Services", href: "#services" },
+    { label: "Trust", href: "#trust" },
     { label: "Cases", href: "#cases" },
     { label: "Process", href: "#process" },
     { label: "FAQs", href: "#faqs" },
     { label: "Contact", href: "#contact" },
   ];
 
-  const activeSection = useActiveSection(["services", "cases", "process", "faqs", "contact"]);
+  const activeSection = useActiveSection(["services", "trust", "cases", "process", "faqs", "contact"]);
 
   const services = [
     {
@@ -152,21 +154,30 @@ const LandingEN = ({ whatsappLink }) => {
     },
   ];
 
-  const trustIndicators = [
+  const trustCards = [
     {
-      label: "Projects delivered",
-      value: "TODO",
-      note: "Replace with real data.",
+      title: "Built for real operations",
+      body: "Internal systems and automations designed to bring order, control, and clarity.",
     },
     {
-      label: "Average delivery time",
-      value: "TODO",
-      note: "Update with real metrics.",
+      title: "Delivery windows",
+      body: (
+        <>
+          Typical delivery: 2&ndash;4 weeks, depending on scope and complexity.
+        </>
+      ),
     },
     {
-      label: "Support and evolution",
-      value: "TODO",
-      note: "Define service details.",
+      title: "Support & evolution",
+      body: "We don't ship and disappear. We support, iterate, and evolve your system.",
+    },
+    {
+      title: "Clear process",
+      body: (
+        <>
+          Discovery &rarr; Design &rarr; Build &rarr; Improve. Simple, transparent, and measurable.
+        </>
+      ),
     },
   ];
 
@@ -397,23 +408,12 @@ const LandingEN = ({ whatsappLink }) => {
             ))}
           </div>
         </Section>
-
-        <Section
+        <TrustSection
           id="trust"
-          eyebrow="Trust"
-          title="Teams trust Lumbre Studio"
-          subtitle="Confidence indicators (placeholders to update)."
-        >
-          <div className="grid gap-6 md:grid-cols-3">
-            {trustIndicators.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-gray/30 p-6">
-                <p className="text-xs uppercase tracking-[0.3em] text-lumbre-off/60">{item.label}</p>
-                <p className="mt-3 text-2xl font-semibold text-lumbre-off">{item.value}</p>
-                <p className="mt-2 text-xs text-lumbre-off/60">{item.note}</p>
-              </div>
-            ))}
-          </div>
-        </Section>
+          title="Trust"
+          subtitle="Signals that reduce risk and set expectations."
+          cards={trustCards}
+        />
 
         <Section
           id="testimonials"
@@ -577,11 +577,24 @@ const LandingEN = ({ whatsappLink }) => {
                   value={formValues.projectType}
                   onChange={handleInputChange}
                 >
-                  <option value="">Select one</option>
-                  <option value="automation">Automation / AI</option>
-                  <option value="software">Custom software</option>
-                  <option value="web">Web / App</option>
-                  <option value="integrations">Integrations</option>
+                  <option className="bg-white text-black" value="">
+                    Select one
+                  </option>
+                  <option className="bg-white text-black" value="website">
+                    Website
+                  </option>
+                  <option className="bg-white text-black" value="custom-systems">
+                    Custom Systems
+                  </option>
+                  <option className="bg-white text-black" value="social-automation">
+                    Social Media Automation
+                  </option>
+                  <option className="bg-white text-black" value="whatsapp-agent">
+                    WhatsApp AI Agent + Calendar
+                  </option>
+                  <option className="bg-white text-black" value="other">
+                    Other
+                  </option>
                 </select>
               </label>
               <label className="mt-4 flex flex-col gap-2 text-xs uppercase tracking-[0.2em] text-lumbre-off/60">
