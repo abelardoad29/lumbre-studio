@@ -31,9 +31,9 @@ const setLinkTag = (rel, href) => {
 };
 
 const LandingEN = ({ whatsappLink }) => {
-  const pageTitle = "Lumbre Studio | Premium software and automation";
+  const pageTitle = "Custom Software & Automation Studio | Lumbre Studio";
   const pageDescription =
-    "We build custom software, automation, and integrations for teams that need order and control.";
+    "We design custom software and automate business processes for companies that need order, control, and operational clarity.";
   const canonicalPath = "/";
 
   useEffect(() => {
@@ -373,10 +373,11 @@ const LandingEN = ({ whatsappLink }) => {
             <div>
               <p className="text-xs uppercase tracking-[0.45em] text-lumbre-brown">Code that's pure fire.</p>
               <h1 className="mt-4 text-4xl font-semibold tracking-tight text-lumbre-off md:text-6xl">
-                Custom software and automation for teams that need order and control.
+                Custom Software & Automation Studio
               </h1>
               <p className="mt-5 text-lg text-lumbre-off/80">
-                We design systems, integrations, and AI-driven workflows to reduce friction and improve decisions.
+                We deliver custom software development, business automation, and internal systems for B2B teams that
+                need operational clarity.
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <a className={primaryButton} href="#contact">
@@ -420,6 +421,10 @@ const LandingEN = ({ whatsappLink }) => {
           title="Services for teams that cannot slow down"
           subtitle="Pick the area to solve first and we will build the right plan."
         >
+          <p className="mb-8 text-sm text-lumbre-off/70">
+            As a software studio focused on custom software development, business automation, and internal systems, we
+            design solutions that make operations measurable and predictable.
+          </p>
           <div className="grid gap-6 md:grid-cols-2">
             {services.map((service) => (
               <article

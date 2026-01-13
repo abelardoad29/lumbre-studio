@@ -32,9 +32,9 @@ const setLinkTag = (rel, href) => {
 };
 
 const LandingES = ({ whatsappLink }) => {
-  const pageTitle = "Lumbre Studio | Software premium y automatización para empresas";
+  const pageTitle = "Software a Medida y Automatización | Lumbre Studio";
   const pageDescription =
-    "Diseñamos software a medida, automatización e integraciones para equipos que necesitan orden y control.";
+    "Diseñamos software a medida y automatizamos procesos para empresas que buscan orden, control y claridad operativa.";
   const canonicalPath = "/es";
 
   useEffect(() => {
@@ -368,10 +368,11 @@ const LandingES = ({ whatsappLink }) => {
             <div>
               <p className="text-xs uppercase tracking-[0.45em] text-lumbre-brown">Code that’s pure fire.</p>
               <h1 className="mt-4 text-4xl font-semibold tracking-tight text-lumbre-off md:text-6xl">
-                Software a medida y automatización para empresas que necesitan orden y control.
+                Software a Medida y Automatización
               </h1>
               <p className="mt-5 text-lg text-lumbre-off/80">
-                Diseñamos sistemas, integraciones y flujos con IA para reducir tiempos y mejorar decisiones.
+                Hacemos desarrollo de software a medida, automatización de procesos empresariales y sistemas internos
+                para equipos B2B que necesitan claridad operativa.
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <a className={primaryButton} href="#contacto">
@@ -415,6 +416,10 @@ const LandingES = ({ whatsappLink }) => {
           title="Servicios pensados para equipos que no pueden detenerse"
           subtitle="Selecciona el frente que necesitas resolver y construimos la solución."
         >
+          <p className="mb-8 text-sm text-lumbre-off/70">
+            Como estudio de software, combinamos automatización de procesos empresariales, desarrollo de software a
+            medida y sistemas internos para mantener la operación bajo control.
+          </p>
           <div className="grid gap-6 md:grid-cols-2">
             {services.map((service) => (
               <article
