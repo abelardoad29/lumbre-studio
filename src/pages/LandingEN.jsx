@@ -339,6 +339,13 @@ const LandingEN = ({ whatsappLink }) => {
         setFormStatus("error");
         return;
       }
+      setFormValues({
+        name: "",
+        email: "",
+        message: "",
+        projectType: "",
+      });
+      setFormErrors({});
       setFormStatus("success");
     } catch (error) {
       setFormStatus("error");

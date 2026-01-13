@@ -58,3 +58,24 @@ Sustituye los archivos por los assets reales manteniendo los mismos nombres.
 - Email: `contacto@lumbrestudio.com`
 - WhatsApp: actualiza `WHATSAPP_LINK` en `src/App.jsx`
 - Instagram: actualiza `INSTAGRAM_URL` en `src/App.jsx`
+
+## Formulario de contacto (Resend + Vercel)
+
+- Endpoint: `POST /api/contact`
+- Variables de entorno en Vercel (Production/Preview/Development):
+  - `RESEND_API_KEY`
+  - `CONTACT_TO` (ej. `contacto@lumbrestudio.com`)
+  - `CONTACT_FROM` (ej. `hola@lumbrestudio.com`, debe estar verificado en Resend)
+- Después de configurar env vars, haz redeploy.
+
+### Local
+
+Crea `.env.local` en la raíz:
+
+```bash
+RESEND_API_KEY=tu_api_key
+CONTACT_TO=contacto@lumbrestudio.com
+CONTACT_FROM=hola@lumbrestudio.com
+```
+
+Reinicia `npm run dev`.
