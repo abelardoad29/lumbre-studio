@@ -59,13 +59,12 @@ const LandingEN = ({ whatsappLink }) => {
   const navLinks = [
     { label: "Services", href: "#services" },
     { label: "Trust", href: "#trust" },
-    { label: "Cases", href: "#cases" },
     { label: "Process", href: "#process" },
     { label: "FAQs", href: "#faqs" },
     { label: "Contact", href: "#contact" },
   ];
 
-  const activeSection = useActiveSection(["services", "trust", "cases", "process", "faqs", "contact"]);
+  const activeSection = useActiveSection(["services", "trust", "process", "faqs", "contact"]);
 
   const services = [
     {
@@ -181,39 +180,6 @@ const LandingEN = ({ whatsappLink }) => {
     },
   ];
 
-  const testimonials = [
-    {
-      quote: "TODO: Add a real client testimonial.",
-      author: "TODO: Name and role.",
-      company: "TODO: Company.",
-    },
-    {
-      quote: "TODO: Add a real client testimonial.",
-      author: "TODO: Name and role.",
-      company: "TODO: Company.",
-    },
-  ];
-
-  const caseStudies = [
-    {
-      title: "Ordered internal operations",
-      problem: "Fragmented processes and manual reporting.",
-      solution: "Built a unified system with key automations.",
-      result: "TODO: Add real impact metrics.",
-    },
-    {
-      title: "Better lead follow-up",
-      problem: "Leads were lost and tracking was inconsistent.",
-      solution: "Integrated CRM, forms, and automated alerts.",
-      result: "TODO: Add real improvement metrics.",
-    },
-    {
-      title: "Automated support",
-      problem: "Repeated questions overloaded the team.",
-      solution: "Implemented WhatsApp flows and smart FAQs.",
-      result: "TODO: Add real reduction metrics.",
-    },
-  ];
 
   const processSteps = [
     {
@@ -466,51 +432,6 @@ const LandingEN = ({ whatsappLink }) => {
         />
 
         <Section
-          id="testimonials"
-          eyebrow="Testimonials"
-          title="What clients say (TODO)"
-          subtitle="Replace with real testimonials before publishing."
-        >
-          <div className="grid gap-6 md:grid-cols-2">
-            {testimonials.map((item, index) => (
-              <figure
-                key={`${item.author}-${index}`}
-                className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-gray/30 p-6"
-              >
-                <blockquote className="text-sm text-lumbre-off/80">"{item.quote}"</blockquote>
-                <figcaption className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">
-                  {item.author} - {item.company}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </Section>
-
-        <Section
-          id="cases"
-          eyebrow="Cases"
-          title="Case studies (TODO)"
-          subtitle="Problem to solution to results. Replace with real data."
-        >
-          <div className="grid gap-6 lg:grid-cols-3">
-            {caseStudies.map((item) => (
-              <article
-                key={item.title}
-                className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-gray/30 p-6"
-              >
-                <h3 className="text-lg font-semibold text-lumbre-off">{item.title}</h3>
-                <p className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">Problem</p>
-                <p className="mt-2 text-sm text-lumbre-off/70">{item.problem}</p>
-                <p className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">What we did</p>
-                <p className="mt-2 text-sm text-lumbre-off/70">{item.solution}</p>
-                <p className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">Result</p>
-                <p className="mt-2 text-sm text-lumbre-off/70">{item.result}</p>
-              </article>
-            ))}
-          </div>
-        </Section>
-
-        <Section
           id="process"
           eyebrow="Process"
           title="How we work"
@@ -694,10 +615,6 @@ const LandingEN = ({ whatsappLink }) => {
       <Footer
         description="Premium software studio focused on automation, integrations, and operational clarity."
         links={navLinks}
-        legalLinks={[
-          { label: "Privacy (TODO)", href: "/privacy" },
-          { label: "Terms (TODO)", href: "/terms" },
-        ]}
         socialLinks={[{ label: "Instagram", href: "https://instagram.com/lumbre.studiomx" }]}
         labels={{
           navLabel: "Navigation",

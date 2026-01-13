@@ -60,7 +60,6 @@ const LandingES = ({ whatsappLink }) => {
   const navLinks = [
     { label: "Servicios", href: "#servicios" },
     { label: "Confianza", href: "#confianza" },
-    { label: "Casos", href: "#casos" },
     { label: "Proceso", href: "#proceso" },
     { label: "FAQs", href: "#faqs" },
     { label: "Contacto", href: "#contacto" },
@@ -69,7 +68,6 @@ const LandingES = ({ whatsappLink }) => {
   const activeSection = useActiveSection([
     "servicios",
     "confianza",
-    "casos",
     "proceso",
     "faqs",
     "contacto",
@@ -181,39 +179,6 @@ const LandingES = ({ whatsappLink }) => {
     },
   ];
 
-  const testimonials = [
-    {
-      quote: "TODO: Agregar testimonio real del cliente.",
-      author: "TODO: Nombre y cargo.",
-      company: "TODO: Empresa.",
-    },
-    {
-      quote: "TODO: Agregar testimonio real del cliente.",
-      author: "TODO: Nombre y cargo.",
-      company: "TODO: Empresa.",
-    },
-  ];
-
-  const caseStudies = [
-    {
-      title: "Operación interna ordenada",
-      problem: "Procesos fragmentados y reportes manuales.",
-      solution: "Diseñamos un sistema central con automatizaciones clave.",
-      result: "TODO: métricas reales de impacto.",
-    },
-    {
-      title: "Ventas con mejor seguimiento",
-      problem: "Pérdida de leads y poca trazabilidad.",
-      solution: "Integramos CRM, formularios y alertas automáticas.",
-      result: "TODO: métricas reales de mejora.",
-    },
-    {
-      title: "Atención automatizada",
-      problem: "Consultas repetitivas saturaban al equipo.",
-      solution: "Implementamos flujos de WhatsApp y FAQs inteligentes.",
-      result: "TODO: métricas reales de reducción de carga.",
-    },
-  ];
 
   const processSteps = [
     {
@@ -461,51 +426,6 @@ const LandingES = ({ whatsappLink }) => {
         />
 
         <Section
-          id="testimonios"
-          eyebrow="Testimonios"
-          title="Lo que dicen nuestros clientes (TODO)"
-          subtitle="Reemplazar con testimonios reales antes de publicar."
-        >
-          <div className="grid gap-6 md:grid-cols-2">
-            {testimonials.map((item, index) => (
-              <figure
-                key={`${item.author}-${index}`}
-                className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-gray/30 p-6"
-              >
-                <blockquote className="text-sm text-lumbre-off/80">“{item.quote}”</blockquote>
-                <figcaption className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">
-                  {item.author} · {item.company}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </Section>
-
-        <Section
-          id="casos"
-          eyebrow="Casos"
-          title="Casos de éxito (TODO)"
-          subtitle="Ejemplos de problema → solución → resultado. Reemplazar con datos reales."
-        >
-          <div className="grid gap-6 lg:grid-cols-3">
-            {caseStudies.map((item) => (
-              <article
-                key={item.title}
-                className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-gray/30 p-6"
-              >
-                <h3 className="text-lg font-semibold text-lumbre-off">{item.title}</h3>
-                <p className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">Problema</p>
-                <p className="mt-2 text-sm text-lumbre-off/70">{item.problem}</p>
-                <p className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">Qué hicimos</p>
-                <p className="mt-2 text-sm text-lumbre-off/70">{item.solution}</p>
-                <p className="mt-4 text-xs uppercase tracking-[0.3em] text-lumbre-off/60">Resultado</p>
-                <p className="mt-2 text-sm text-lumbre-off/70">{item.result}</p>
-              </article>
-            ))}
-          </div>
-        </Section>
-
-        <Section
           id="proceso"
           eyebrow="Proceso"
           title="Cómo trabajamos"
@@ -689,10 +609,6 @@ const LandingES = ({ whatsappLink }) => {
       <Footer
         description="Estudio premium de software y automatización para equipos que necesitan claridad."
         links={navLinks}
-        legalLinks={[
-          { label: "Privacidad (TODO)", href: "/privacidad" },
-          { label: "Términos (TODO)", href: "/terminos" },
-        ]}
         socialLinks={[{ label: "Instagram", href: "https://instagram.com/lumbre.studiomx" }]}
         labels={{
           navLabel: "Navegación",
