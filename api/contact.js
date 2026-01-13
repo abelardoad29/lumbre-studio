@@ -1,7 +1,5 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const escapeHtml = (value = "") =>
   String(value)
     .replace(/&/g, "&amp;")
@@ -63,6 +61,7 @@ export default async function handler(req, res) {
   `;
 
   try {
+    const resend = new Resend(RESEND_API_KEY);
     const { error } = await resend.emails.send({
       from: `Lumbre Studio <${CONTACT_FROM}>`,
       to: CONTACT_TO,
