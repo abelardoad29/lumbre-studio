@@ -4,7 +4,7 @@ import LandingES from "./pages/LandingES.jsx";
 import FloatingInstagramButton from "./components/FloatingInstagramButton.jsx";
 import { useAutoLanguageRedirect } from "./hooks/useAutoLanguageRedirect";
 
-const WHATSAPP_LINK = "";
+const WHATSAPP_LINK = "https://wa.me/5216682471627";
 const INSTAGRAM_URL = "https://instagram.com/lumbre.studiomx";
 
 function App() {

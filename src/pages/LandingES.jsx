@@ -325,7 +325,7 @@ const LandingES = ({ whatsappLink }) => {
       >
         Saltar al contenido principal
       </a>
-      <Navbar links={navLinks} ctaLabel="Agendar llamada" ctaHref="#contacto" activeId={activeSection} />
+      <Navbar links={navLinks} ctaLabel="Agenda una cita" ctaHref="#contacto" activeId={activeSection} />
       <main id="main" className="pb-24">
         <section id="hero" className="relative overflow-hidden">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_circle_at_top,_var(--lumbre-hero-glow),_transparent_70%)]" />
@@ -341,7 +341,7 @@ const LandingES = ({ whatsappLink }) => {
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <a className={primaryButton} href="#contacto">
-                  Agendar llamada
+                  Agenda una cita
                 </a>
                 <a className={secondaryButton} href="#servicios">
                   Ver servicios

@@ -6,7 +6,7 @@ export const products = [
     tiers: [
       {
         name: "Básico",
-        price: "desde $7,900 MXN / $499 USD",
+        price: "desde $4,999 MXN + $500 MXN/mes de mantenimiento",
         features: [
           "1 página",
           "Diseño responsive",
