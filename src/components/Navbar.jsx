@@ -80,9 +80,9 @@ const Navbar = ({ links = [], ctaLabel = "", ctaHref = "#contacto", activeId }) 
   }`;
 
   const ctaClass =
-    "inline-flex items-center justify-center rounded-full bg-lumbre-off px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-black transition hover:bg-white";
+    "inline-flex items-center justify-center rounded-full bg-lumbre-off px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-black transition hover:bg-lumbre-off/90 active:bg-lumbre-off/80";
   const ctaMobileClass =
-    "inline-flex items-center justify-center rounded-full bg-lumbre-off px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-lumbre-black transition hover:bg-white";
+    "inline-flex items-center justify-center rounded-full bg-lumbre-off px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-lumbre-black transition hover:bg-lumbre-off/90 active:bg-lumbre-off/80";
   const mobileButtonClass =
     "inline-flex items-center justify-center rounded-full border border-lumbre-gray/70 p-2 text-lumbre-off/80 transition hover:border-lumbre-off hover:text-lumbre-off";
   const menuIcon = isOpen ? (
