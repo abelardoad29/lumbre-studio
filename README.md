@@ -66,6 +66,8 @@ Sustituye los archivos por los assets reales manteniendo los mismos nombres.
   - `RESEND_API_KEY`
   - `CONTACT_TO` (ej. `contacto@lumbrestudio.com`)
   - `CONTACT_FROM` (ej. `hola@lumbrestudio.com`, debe estar verificado en Resend)
+  - `TURNSTILE_SECRET_KEY` (Cloudflare Turnstile)
+  - `VITE_TURNSTILE_SITE_KEY` (Cloudflare Turnstile, frontend)
 - Después de configurar env vars, haz redeploy.
 
 ### Local
@@ -76,6 +78,8 @@ Crea `.env.local` en la raíz:
 RESEND_API_KEY=tu_api_key
 CONTACT_TO=contacto@lumbrestudio.com
 CONTACT_FROM=hola@lumbrestudio.com
+TURNSTILE_SECRET_KEY=tu_turnstile_secret
+VITE_TURNSTILE_SITE_KEY=tu_turnstile_site_key
 ```
 
 Reinicia `npm run dev`.

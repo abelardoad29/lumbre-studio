@@ -49,6 +49,42 @@ export const products = [
     ],
   },
   {
+    id: "menu-qr",
+    title: "Menú QR para restaurantes",
+    description: "Paquetes listos para publicar tu menú con QR.",
+    tiers: [
+      {
+        name: "Paquete 1 - QR Básico (PDF en Drive)",
+        price: "$800 MXN (pago único)",
+        note: "Ideal si ya tienes tu menú en PDF.",
+        features: ["QR funcional", "Enlace a PDF público", "Entrega lista para imprimir"],
+        ctaPrimary: "Cotizar",
+        ctaSecondary: "Escríbenos",
+      },
+      {
+        name: "Paquete 2 - QR + PDF Diseñado",
+        price: "$2,000 MXN (pago único)",
+        note: "Mejor presentación y experiencia en celular.",
+        features: ["Diseño del menú en PDF", "QR personalizado con colores del negocio", "1 ronda de cambios"],
+        ctaPrimary: "Cotizar",
+        ctaSecondary: "Escríbenos",
+      },
+      {
+        name: "Paquete 3 - Menú Online en Página Web",
+        price: "$4,500 MXN",
+        note: "Recomendado. Dominio propio +$200 MXN. Hosting + soporte $500 MXN/mes.",
+        features: [
+          "Página web tipo one-page con menú online",
+          "Menú por categorías",
+          "Diseño responsive (celular / tablet)",
+          "QR apuntando a la página",
+        ],
+        ctaPrimary: "Cotizar",
+        ctaSecondary: "Escríbenos",
+      },
+    ],
+  },
+  {
     id: "sistemas-a-medida",
     title: "Sistemas a Medida",
     description: "Plataformas a la medida para operaciones, datos y crecimiento.",

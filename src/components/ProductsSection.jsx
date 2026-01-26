@@ -12,24 +12,27 @@ const ProductsSection = ({
   scripts = [],
   mailtoLink,
 }) => {
-  const primaryProduct = products.find((product) => Array.isArray(product.tiers) && product.tiers.length);
-  const secondaryProducts = primaryProduct
-    ? products.filter((product) => product.id !== primaryProduct.id)
-    : products;
+  const tieredProducts = products.filter((product) => Array.isArray(product.tiers) && product.tiers.length);
+  const tieredIds = new Set(tieredProducts.map((product) => product.id));
+  const standardProducts = products.filter((product) => !tieredIds.has(product.id));
 
   return (
     <Section id={id} eyebrow={eyebrow} title={title} subtitle={subtitle}>
-      {primaryProduct ? (
-        <div className="mb-10">
-          <ProductCard {...primaryProduct} mailtoLink={mailtoLink} />
+      {tieredProducts.length ? (
+        <div className="mb-10 space-y-10">
+          {tieredProducts.map((product) => (
+            <ProductCard key={product.id} {...product} mailtoLink={mailtoLink} />
+          ))}
         </div>
       ) : null}
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {secondaryProducts.map((product) => (
-          <ProductCard key={product.id} {...product} mailtoLink={mailtoLink} />
-        ))}
-      </div>
+      {standardProducts.length ? (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {standardProducts.map((product) => (
+            <ProductCard key={product.id} {...product} mailtoLink={mailtoLink} />
+          ))}
+        </div>
+      ) : null}
 
       <div className="mt-12 rounded-2xl border border-lumbre-gray/70 bg-lumbre-black/40 p-6">
         <div className="mb-6">

@@ -49,6 +49,39 @@ export const products = [
     ],
   },
   {
+    id: "qr-menu",
+    title: "Restaurant QR Menu",
+    description: "Ready-to-publish QR menu packages.",
+    tiers: [
+      {
+        name: "Package 1 - Basic QR (PDF on Drive)",
+        price: "$800 MXN (one-time)",
+        note: "Ideal if you already have your menu in PDF.",
+        features: ["Working QR", "Public PDF link", "Print-ready delivery"],
+        ctaPrimary: "Get a quote",
+      },
+      {
+        name: "Package 2 - QR + Designed PDF",
+        price: "$2,000 MXN (one-time)",
+        note: "Better presentation and mobile experience.",
+        features: ["PDF menu design", "Custom QR in your brand colors", "1 round of revisions"],
+        ctaPrimary: "Get a quote",
+      },
+      {
+        name: "Package 3 - Online Menu Web Page",
+        price: "$4,500 MXN",
+        note: "Recommended. Custom domain +$200 MXN. Hosting + support $500 MXN/month.",
+        features: [
+          "One-page website with online menu",
+          "Menu by categories",
+          "Responsive design (mobile / tablet)",
+          "QR pointing to the page",
+        ],
+        ctaPrimary: "Get a quote",
+      },
+    ],
+  },
+  {
     id: "custom-systems",
     title: "Custom Systems",
     description: "Tailored platforms for operations, data, and growth.",

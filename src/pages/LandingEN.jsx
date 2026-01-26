@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import Section from "../components/Section";
 import ProductsSection from "../components/ProductsSection";
@@ -60,11 +60,12 @@ const LandingEN = ({ whatsappLink }) => {
     { label: "Services", href: "#services" },
     { label: "Trust", href: "#trust" },
     { label: "Process", href: "#process" },
+    { label: "Products", href: "#products" },
     { label: "FAQs", href: "#faqs" },
     { label: "Contact", href: "#contact" },
   ];
 
-  const activeSection = useActiveSection(["services", "trust", "process", "faqs", "contact"]);
+  const activeSection = useActiveSection(["services", "trust", "process", "products", "faqs", "contact"]);
 
   const services = [
     {
@@ -237,6 +238,7 @@ const LandingEN = ({ whatsappLink }) => {
     { value: "other", label: "Other" },
   ];
 
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
   const [activeFaq, setActiveFaq] = useState("");
   const [formValues, setFormValues] = useState({
     name: "",
@@ -246,6 +248,9 @@ const LandingEN = ({ whatsappLink }) => {
   });
   const [formStatus, setFormStatus] = useState("idle");
   const [formErrors, setFormErrors] = useState({});
+  const [captchaToken, setCaptchaToken] = useState("");
+  const captchaContainerRef = useRef(null);
+  const captchaWidgetId = useRef(null);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -263,6 +268,80 @@ const LandingEN = ({ whatsappLink }) => {
     });
   };
 
+  const clearCaptchaError = () => {
+    setFormErrors((prev) => {
+      if (!prev.captcha) {
+        return prev;
+      }
+      const next = { ...prev };
+      delete next.captcha;
+      return next;
+    });
+  };
+
+  const resetCaptcha = () => {
+    setCaptchaToken("");
+    if (typeof window !== "undefined" && window.turnstile && typeof window.turnstile.reset === "function") {
+      if (captchaWidgetId.current !== null) {
+        window.turnstile.reset(captchaWidgetId.current);
+      } else {
+        window.turnstile.reset();
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!turnstileSiteKey) {
+      return;
+    }
+    const successCallback = "turnstileSuccessEN";
+    const expiredCallback = "turnstileExpiredEN";
+    const errorCallback = "turnstileErrorEN";
+
+    window[successCallback] = (token) => {
+      setCaptchaToken(token);
+      clearCaptchaError();
+    };
+    window[expiredCallback] = () => {
+      setCaptchaToken("");
+    };
+    window[errorCallback] = () => {
+      setCaptchaToken("");
+    };
+
+    let cancelled = false;
+    const renderWidget = () => {
+      if (cancelled || !captchaContainerRef.current) {
+        return;
+      }
+      if (window.turnstile && typeof window.turnstile.render === "function") {
+        if (captchaWidgetId.current !== null) {
+          return;
+        }
+        captchaWidgetId.current = window.turnstile.render(captchaContainerRef.current, {
+          sitekey: turnstileSiteKey,
+          callback: successCallback,
+          "expired-callback": expiredCallback,
+          "error-callback": errorCallback,
+        });
+        return;
+      }
+      setTimeout(renderWidget, 250);
+    };
+    renderWidget();
+
+    return () => {
+      cancelled = true;
+      delete window[successCallback];
+      delete window[expiredCallback];
+      delete window[errorCallback];
+      if (window.turnstile && typeof window.turnstile.remove === "function" && captchaWidgetId.current !== null) {
+        window.turnstile.remove(captchaWidgetId.current);
+      }
+      captchaWidgetId.current = null;
+    };
+  }, [turnstileSiteKey]);
+
   const validateForm = () => {
     const errors = {};
     if (!formValues.name.trim()) {
@@ -275,6 +354,9 @@ const LandingEN = ({ whatsappLink }) => {
     }
     if (!formValues.message.trim()) {
       errors.message = "Tell us about your project.";
+    }
+    if (turnstileSiteKey && !captchaToken) {
+      errors.captcha = "Complete the CAPTCHA.";
     }
     return errors;
   };
@@ -298,10 +380,21 @@ const LandingEN = ({ whatsappLink }) => {
           email: formValues.email,
           message: formValues.message,
           service: selectedService,
+          captchaToken,
         }),
       });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok || !payload.ok) {
+        if (payload && ["Captcha required", "Captcha verification failed"].includes(payload.error)) {
+          setFormErrors((prev) => ({
+            ...prev,
+            captcha: "Please verify the CAPTCHA.",
+          }));
+          resetCaptcha();
+          setFormStatus("idle");
+          return;
+        }
+        resetCaptcha();
         setFormStatus("error");
         return;
       }
@@ -312,8 +405,10 @@ const LandingEN = ({ whatsappLink }) => {
         projectType: "",
       });
       setFormErrors({});
+      resetCaptcha();
       setFormStatus("success");
     } catch (error) {
+      resetCaptcha();
       setFormStatus("error");
     }
   };
@@ -568,6 +663,14 @@ const LandingEN = ({ whatsappLink }) => {
                   <span className="text-xs text-red-400">{formErrors.message}</span>
                 ) : null}
               </label>
+              {turnstileSiteKey ? (
+                <div className="mt-4">
+                  <div ref={captchaContainerRef} />
+                  {formErrors.captcha ? (
+                    <span className="mt-2 block text-xs text-red-400">{formErrors.captcha}</span>
+                  ) : null}
+                </div>
+              ) : null}
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <button className={primaryButton} type="submit" disabled={formStatus === "loading"}>
                   {formStatus === "loading" ? "Sending..." : "Send"}

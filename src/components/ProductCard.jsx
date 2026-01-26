@@ -49,12 +49,9 @@ const ProductCard = ({
                   </li>
                 ))}
               </ul>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-4">
                 <a className={primaryButton} href={mailtoLink}>
                   {tier.ctaPrimary || ctaLabel}
-                </a>
-                <a className={secondaryButton} href={mailtoLink}>
-                  {tier.ctaSecondary || "Email us"}
                 </a>
               </div>
             </div>
