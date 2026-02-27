@@ -2,7 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
@@ -15,12 +19,19 @@
       content="We design custom software and automate business processes for companies that need order, control, and operational clarity."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://lumbrestudio.com/" />
-    <meta property="og:image" content="https://lumbrestudio.com/logo-cactus.png" />
-    <link rel="canonical" href="https://lumbrestudio.com/" />
-    <link rel="alternate" href="https://lumbrestudio.com/" hreflang="en" />
-    <link rel="alternate" href="https://lumbrestudio.com/es" hreflang="es" />
-    <link rel="alternate" href="https://lumbrestudio.com/" hreflang="x-default" />
+    <meta property="og:url" content="%VITE_PUBLIC_SITE_URL%/" />
+    <meta property="og:image" content="%VITE_PUBLIC_SITE_URL%/og-cover.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Custom Software &amp; Automation Studio | Lumbre Studio" />
+    <meta
+      name="twitter:description"
+      content="We design custom software and automate business processes for companies that need order, control, and operational clarity."
+    />
+    <meta name="twitter:image" content="%VITE_PUBLIC_SITE_URL%/og-cover.png" />
+    <link rel="canonical" href="%VITE_PUBLIC_SITE_URL%/" />
+    <link rel="alternate" href="%VITE_PUBLIC_SITE_URL%/" hreflang="en" />
+    <link rel="alternate" href="%VITE_PUBLIC_SITE_URL%/es" hreflang="es" />
+    <link rel="alternate" href="%VITE_PUBLIC_SITE_URL%/" hreflang="x-default" />
     <meta name="theme-color" content="#0B0B0B" />
     <title>Custom Software &amp; Automation Studio | Lumbre Studio</title>
     <script type="application/ld+json">
@@ -28,8 +39,9 @@
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Lumbre Studio",
-        "url": "https://lumbrestudio.com",
-        "logo": "https://lumbrestudio.com/logo-cactus.png",
+        "url": "%VITE_PUBLIC_SITE_URL%",
+        "logo": "%VITE_PUBLIC_SITE_URL%/logo-cactus.png",
+        "sameAs": ["https://instagram.com/lumbre.studiomx"],
         "contactPoint": [
           {
             "@type": "ContactPoint",
@@ -44,12 +56,7 @@
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "Lumbre Studio",
-        "url": "https://lumbrestudio.com",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://lumbrestudio.com/?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
+        "url": "%VITE_PUBLIC_SITE_URL%"
       }
     </script>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>

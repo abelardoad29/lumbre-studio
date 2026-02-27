@@ -2,8 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lumbrestudio.com/</loc>
+    <lastmod>2026-02-26</lastmod>
   </url>
   <url>
     <loc>https://lumbrestudio.com/es</loc>
+    <lastmod>2026-02-26</lastmod>
+  </url>
+  <url>
+    <loc>https://lumbrestudio.com/software-empaque-agricola</loc>
+    <lastmod>2026-02-26</lastmod>
+  </url>
+  <url>
+    <loc>https://lumbrestudio.com/sistema-nomina-agricola</loc>
+    <lastmod>2026-02-26</lastmod>
+  </url>
+  <url>
+    <loc>https://lumbrestudio.com/control-asistencia-qr</loc>
+    <lastmod>2026-02-26</lastmod>
   </url>
 </urlset>

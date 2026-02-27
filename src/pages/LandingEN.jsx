@@ -6,29 +6,9 @@ import Footer from "../components/Footer";
 import TrustSection from "../components/TrustSection";
 import { products, scriptsAndTools } from "../content/products.en.js";
 import { useActiveSection } from "../hooks/useActiveSection";
+import { applySeo } from "../utils/seo";
 
 const MAILTO_LINK = "mailto:contacto@lumbrestudio.com?subject=Quote%20-%20Lumbre%20Studio";
-
-const setMetaTag = (attrName, attrValue, content) => {
-  const selector = `meta[${attrName}="${attrValue}"]`;
-  let tag = document.head.querySelector(selector);
-  if (!tag) {
-    tag = document.createElement("meta");
-    tag.setAttribute(attrName, attrValue);
-    document.head.appendChild(tag);
-  }
-  tag.setAttribute("content", content);
-};
-
-const setLinkTag = (rel, href) => {
-  let link = document.head.querySelector(`link[rel="${rel}"]`);
-  if (!link) {
-    link = document.createElement("link");
-    link.setAttribute("rel", rel);
-    document.head.appendChild(link);
-  }
-  link.setAttribute("href", href);
-};
 
 const LandingEN = ({ whatsappLink }) => {
   const pageTitle = "Custom Software & Automation Studio | Lumbre Studio";
@@ -37,16 +17,13 @@ const LandingEN = ({ whatsappLink }) => {
   const canonicalPath = "/";
 
   useEffect(() => {
-    const canonicalUrl = new URL(canonicalPath, window.location.origin).toString();
-    document.title = pageTitle;
-    document.documentElement.lang = "en";
-    setMetaTag("name", "description", pageDescription);
-    setMetaTag("property", "og:title", pageTitle);
-    setMetaTag("property", "og:description", pageDescription);
-    setMetaTag("property", "og:url", canonicalUrl);
-    setMetaTag("property", "og:type", "website");
-    setLinkTag("canonical", canonicalUrl);
-  }, [pageTitle, pageDescription]);
+    applySeo({
+      title: pageTitle,
+      description: pageDescription,
+      path: canonicalPath,
+      lang: "en",
+    });
+  }, [pageTitle, pageDescription, canonicalPath]);
 
   const primaryButton =
     "inline-flex items-center justify-center rounded-full bg-lumbre-off px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-black transition hover:bg-white";
@@ -294,18 +271,14 @@ const LandingEN = ({ whatsappLink }) => {
     if (!turnstileSiteKey) {
       return;
     }
-    const successCallback = "turnstileSuccessEN";
-    const expiredCallback = "turnstileExpiredEN";
-    const errorCallback = "turnstileErrorEN";
-
-    window[successCallback] = (token) => {
+    const handleSuccess = (token) => {
       setCaptchaToken(token);
       clearCaptchaError();
     };
-    window[expiredCallback] = () => {
+    const handleExpired = () => {
       setCaptchaToken("");
     };
-    window[errorCallback] = () => {
+    const handleError = () => {
       setCaptchaToken("");
     };
 
@@ -320,9 +293,9 @@ const LandingEN = ({ whatsappLink }) => {
         }
         captchaWidgetId.current = window.turnstile.render(captchaContainerRef.current, {
           sitekey: turnstileSiteKey,
-          callback: successCallback,
-          "expired-callback": expiredCallback,
-          "error-callback": errorCallback,
+          callback: handleSuccess,
+          "expired-callback": handleExpired,
+          "error-callback": handleError,
         });
         return;
       }
@@ -332,9 +305,6 @@ const LandingEN = ({ whatsappLink }) => {
 
     return () => {
       cancelled = true;
-      delete window[successCallback];
-      delete window[expiredCallback];
-      delete window[errorCallback];
       if (window.turnstile && typeof window.turnstile.remove === "function" && captchaWidgetId.current !== null) {
         window.turnstile.remove(captchaWidgetId.current);
       }
