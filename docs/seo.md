@@ -18,6 +18,8 @@ Edita `pageTitle`, `pageDescription` y `canonicalPath` en cada pagina:
 - `public/robots.txt` apunta a `https://lumbrestudio.com/sitemap.xml`.
 - `public/sitemap.xml` contiene las rutas actuales y `lastmod`.
 - Si cambias el dominio o agregas nuevas rutas, actualiza ambos archivos.
+- El sitemap se genera automaticamente en cada build con `scripts/generate-sitemap.mjs`.
+Actualiza el arreglo `routes` dentro de `scripts/generate-sitemap.mjs` cuando agregues paginas nuevas.
 
 ## Assets SEO
 - Favicon: `public/favicon.ico`, `public/favicon.png`, `public/favicon.svg`.

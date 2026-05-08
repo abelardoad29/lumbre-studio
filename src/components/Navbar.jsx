@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import logo from "../assets/logo-cactus.png";
+import { useThemePreference } from "../hooks/useThemePreference";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeToggle from "./ThemeToggle";
 
 const Navbar = ({ links = [], ctaLabel = "", ctaHref = "#contacto", activeId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { theme, toggleTheme } = useThemePreference();
   const panelRef = useRef(null);
   const menuId = "mobile-menu";
+  const logo = theme === "light" ? "/favicon-black.png" : "/favicon.png";
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 8);
@@ -111,7 +113,7 @@ const Navbar = ({ links = [], ctaLabel = "", ctaHref = "#contacto", activeId }) 
               {menuIcon}
             </button>
             <a href="#hero" className="flex items-center">
-              <img src={logo} alt="Lumbre Studio logo" className="h-10 w-auto logo-mark" />
+              <img src={logo} alt="Lumbre Studio logo" className="h-9 w-9 object-contain" />
             </a>
           </div>
 
@@ -126,7 +128,7 @@ const Navbar = ({ links = [], ctaLabel = "", ctaHref = "#contacto", activeId }) 
               ))}
             </ul>
             <LanguageSwitcher />
-            <ThemeToggle />
+            <ThemeToggle theme={theme} onToggleTheme={toggleTheme} />
             {ctaLabel ? (
               <a className={ctaClass} href={ctaHref}>
                 {ctaLabel}
@@ -187,7 +189,7 @@ const Navbar = ({ links = [], ctaLabel = "", ctaHref = "#contacto", activeId }) 
             </ul>
             <div className="flex items-center gap-4">
               <LanguageSwitcher />
-              <ThemeToggle />
+              <ThemeToggle theme={theme} onToggleTheme={toggleTheme} />
             </div>
             {ctaLabel ? (
               <a className={ctaClass} href={ctaHref} onClick={() => setIsOpen(false)}>
