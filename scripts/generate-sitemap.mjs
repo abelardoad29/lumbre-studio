@@ -38,14 +38,34 @@ const loadEnv = () => {
 };
 
 const envFromFiles = loadEnv();
-const baseUrlRaw = process.env.VITE_PUBLIC_SITE_URL || envFromFiles.VITE_PUBLIC_SITE_URL;
+const normalizeBaseUrl = (value) => {
+  if (!value || !value.trim()) {
+    return "";
+  }
 
-if (!baseUrlRaw) {
-  console.error("Missing VITE_PUBLIC_SITE_URL. Set it in your environment or .env.local");
+  const normalized = value.trim().replace(/\/+$/, "");
+  if (/^https?:\/\//i.test(normalized)) {
+    return normalized;
+  }
+
+  return `https://${normalized}`;
+};
+
+const baseUrl = normalizeBaseUrl(
+  process.env.VITE_PUBLIC_SITE_URL ||
+    envFromFiles.VITE_PUBLIC_SITE_URL ||
+    process.env.VITE_VERCEL_PROJECT_PRODUCTION_URL ||
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+    process.env.VITE_VERCEL_URL ||
+    process.env.VERCEL_URL ||
+    "https://lumbrestudio.com"
+);
+
+if (!baseUrl) {
+  console.error("Missing site URL for sitemap generation.");
   process.exit(1);
 }
 
-const baseUrl = baseUrlRaw.replace(/\/+$/, "");
 const routes = [
   "/",
   "/es",

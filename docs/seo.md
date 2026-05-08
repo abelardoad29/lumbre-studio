@@ -1,8 +1,8 @@
 # SEO basico
 
 ## Variables de entorno
-- `VITE_PUBLIC_SITE_URL` controla el dominio canonical y las URLs de OG/JSON-LD en `index.html`.
-- En desarrollo puedes usar el valor actual, pero en produccion debes configurarlo en tu hosting.
+- `index.html` usa `https://lumbrestudio.com` para canonical y URLs OG/JSON-LD iniciales.
+- `VITE_PUBLIC_SITE_URL` puede sobrescribir el dominio usado por el SEO dinamico y por el sitemap.
 - Usa el dominio sin slash final, por ejemplo: `https://lumbrestudio.com`.
 
 ## Cambiar title/description por pagina
