@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const TURNSTILE_SCRIPT_ID = "cloudflare-turnstile-api";
 const TURNSTILE_SCRIPT_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
@@ -70,78 +70,100 @@ export const useTurnstileWidget = ({ siteKey, onSuccess, onExpired, onError }) =
   const containerRef = useRef(null);
   const widgetIdRef = useRef(null);
   const callbacksRef = useRef({ onSuccess, onExpired, onError });
-  const [shouldLoad, setShouldLoad] = useState(false);
+  const pendingChallengeRef = useRef(null);
 
   useEffect(() => {
     callbacksRef.current = { onSuccess, onExpired, onError };
   }, [onSuccess, onExpired, onError]);
 
   useEffect(() => {
-    if (!siteKey || shouldLoad) {
-      return;
-    }
-
-    const container = containerRef.current;
-    if (!container) {
-      return;
-    }
-
-    if (typeof IntersectionObserver === "undefined") {
-      setShouldLoad(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShouldLoad(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "600px 0px" }
-    );
-
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, [siteKey, shouldLoad]);
-
-  useEffect(() => {
-    if (!siteKey || !shouldLoad) {
-      return;
-    }
-
-    let cancelled = false;
-
-    loadTurnstile()
-      .then((turnstile) => {
-        if (cancelled || !containerRef.current || widgetIdRef.current !== null) {
-          return;
-        }
-
-        widgetIdRef.current = turnstile.render(containerRef.current, {
-          sitekey: siteKey,
-          callback: (token) => callbacksRef.current.onSuccess?.(token),
-          "expired-callback": () => callbacksRef.current.onExpired?.(),
-          "error-callback": () => callbacksRef.current.onError?.(),
-        });
-      })
-      .catch(() => {
-        if (!cancelled) {
-          callbacksRef.current.onError?.();
-        }
-      });
-
     return () => {
-      cancelled = true;
+      pendingChallengeRef.current?.("");
+      pendingChallengeRef.current = null;
+
       const turnstile = getTurnstile();
       if (turnstile && typeof turnstile.remove === "function" && widgetIdRef.current !== null) {
         turnstile.remove(widgetIdRef.current);
       }
       widgetIdRef.current = null;
     };
-  }, [siteKey, shouldLoad]);
+  }, []);
+
+  const resolvePendingChallenge = (token = "") => {
+    if (!pendingChallengeRef.current) {
+      return;
+    }
+
+    pendingChallengeRef.current(token);
+    pendingChallengeRef.current = null;
+  };
+
+  const renderWidget = async () => {
+    if (!siteKey || !containerRef.current) {
+      return null;
+    }
+
+    const turnstile = await loadTurnstile();
+    if (widgetIdRef.current !== null) {
+      return turnstile;
+    }
+
+    widgetIdRef.current = turnstile.render(containerRef.current, {
+      sitekey: siteKey,
+      execution: "execute",
+      appearance: "interaction-only",
+      callback: (token) => {
+        resolvePendingChallenge(token);
+        callbacksRef.current.onSuccess?.(token);
+      },
+      "expired-callback": () => {
+        resolvePendingChallenge("");
+        callbacksRef.current.onExpired?.();
+      },
+      "error-callback": () => {
+        resolvePendingChallenge("");
+        callbacksRef.current.onError?.();
+      },
+    });
+
+    return turnstile;
+  };
+
+  const execute = async () => {
+    try {
+      const turnstile = await renderWidget();
+      if (!turnstile || widgetIdRef.current === null) {
+        return "";
+      }
+
+      const response = turnstile.getResponse?.(widgetIdRef.current);
+      if (response) {
+        return response;
+      }
+
+      return await new Promise((resolve) => {
+        pendingChallengeRef.current = resolve;
+        try {
+          turnstile.execute(containerRef.current);
+        } catch (error) {
+          try {
+            turnstile.execute(widgetIdRef.current);
+          } catch (fallbackError) {
+            resolvePendingChallenge("");
+            callbacksRef.current.onError?.();
+          }
+        }
+      });
+    } catch (error) {
+      resolvePendingChallenge("");
+      callbacksRef.current.onError?.();
+      return "";
+    }
+  };
 
   const reset = () => {
+    resolvePendingChallenge("");
+
     const turnstile = getTurnstile();
     if (!turnstile || typeof turnstile.reset !== "function") {
       return;
@@ -155,5 +177,5 @@ export const useTurnstileWidget = ({ siteKey, onSuccess, onExpired, onError }) =
     turnstile.reset();
   };
 
-  return { containerRef, reset };
+  return { containerRef, execute, reset };
 };

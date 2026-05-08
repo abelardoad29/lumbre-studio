@@ -268,7 +268,11 @@ const LandingEN = ({ whatsappLink }) => {
     setCaptchaToken("");
   };
 
-  const { containerRef: captchaContainerRef, reset: resetTurnstile } = useTurnstileWidget({
+  const {
+    containerRef: captchaContainerRef,
+    execute: executeTurnstile,
+    reset: resetTurnstile,
+  } = useTurnstileWidget({
     siteKey: turnstileSiteKey,
     onSuccess: handleCaptchaSuccess,
     onExpired: handleCaptchaExpired,
@@ -293,9 +297,6 @@ const LandingEN = ({ whatsappLink }) => {
     if (!formValues.message.trim()) {
       errors.message = "Tell us about your project.";
     }
-    if (turnstileSiteKey && !captchaToken) {
-      errors.captcha = "Complete the CAPTCHA.";
-    }
     return errors;
   };
 
@@ -308,6 +309,18 @@ const LandingEN = ({ whatsappLink }) => {
     }
     setFormStatus("loading");
     try {
+      const verifiedCaptchaToken = turnstileSiteKey
+        ? captchaToken || (await executeTurnstile())
+        : "";
+      if (turnstileSiteKey && !verifiedCaptchaToken) {
+        setFormErrors((prev) => ({
+          ...prev,
+          captcha: "Please verify the CAPTCHA.",
+        }));
+        setFormStatus("idle");
+        return;
+      }
+
       const selectedService =
         serviceOptions.find((option) => option.value === formValues.projectType)?.label || "";
       const response = await fetch("/api/contact", {
@@ -318,7 +331,7 @@ const LandingEN = ({ whatsappLink }) => {
           email: formValues.email,
           message: formValues.message,
           service: selectedService,
-          captchaToken,
+          captchaToken: verifiedCaptchaToken,
         }),
       });
       const payload = await response.json().catch(() => ({}));
