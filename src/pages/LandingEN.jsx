@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Section from "../components/Section";
 import ProductsSection from "../components/ProductsSection";
@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import TrustSection from "../components/TrustSection";
 import { products, scriptsAndTools } from "../content/products.en.js";
 import { useActiveSection } from "../hooks/useActiveSection";
+import { useTurnstileWidget } from "../hooks/useTurnstileWidget";
 import { applySeo } from "../utils/seo";
 
 const MAILTO_LINK = "mailto:contacto@lumbrestudio.com?subject=Quote%20-%20Lumbre%20Studio";
@@ -226,8 +227,6 @@ const LandingEN = ({ whatsappLink }) => {
   const [formStatus, setFormStatus] = useState("idle");
   const [formErrors, setFormErrors] = useState({});
   const [captchaToken, setCaptchaToken] = useState("");
-  const captchaContainerRef = useRef(null);
-  const captchaWidgetId = useRef(null);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -256,61 +255,30 @@ const LandingEN = ({ whatsappLink }) => {
     });
   };
 
-  const resetCaptcha = () => {
-    setCaptchaToken("");
-    if (typeof window !== "undefined" && window.turnstile && typeof window.turnstile.reset === "function") {
-      if (captchaWidgetId.current !== null) {
-        window.turnstile.reset(captchaWidgetId.current);
-      } else {
-        window.turnstile.reset();
-      }
-    }
+  const handleCaptchaSuccess = (token) => {
+    setCaptchaToken(token);
+    clearCaptchaError();
   };
 
-  useEffect(() => {
-    if (!turnstileSiteKey) {
-      return;
-    }
-    const handleSuccess = (token) => {
-      setCaptchaToken(token);
-      clearCaptchaError();
-    };
-    const handleExpired = () => {
-      setCaptchaToken("");
-    };
-    const handleError = () => {
-      setCaptchaToken("");
-    };
+  const handleCaptchaExpired = () => {
+    setCaptchaToken("");
+  };
 
-    let cancelled = false;
-    const renderWidget = () => {
-      if (cancelled || !captchaContainerRef.current) {
-        return;
-      }
-      if (window.turnstile && typeof window.turnstile.render === "function") {
-        if (captchaWidgetId.current !== null) {
-          return;
-        }
-        captchaWidgetId.current = window.turnstile.render(captchaContainerRef.current, {
-          sitekey: turnstileSiteKey,
-          callback: handleSuccess,
-          "expired-callback": handleExpired,
-          "error-callback": handleError,
-        });
-        return;
-      }
-      setTimeout(renderWidget, 250);
-    };
-    renderWidget();
+  const handleCaptchaError = () => {
+    setCaptchaToken("");
+  };
 
-    return () => {
-      cancelled = true;
-      if (window.turnstile && typeof window.turnstile.remove === "function" && captchaWidgetId.current !== null) {
-        window.turnstile.remove(captchaWidgetId.current);
-      }
-      captchaWidgetId.current = null;
-    };
-  }, [turnstileSiteKey]);
+  const { containerRef: captchaContainerRef, reset: resetTurnstile } = useTurnstileWidget({
+    siteKey: turnstileSiteKey,
+    onSuccess: handleCaptchaSuccess,
+    onExpired: handleCaptchaExpired,
+    onError: handleCaptchaError,
+  });
+
+  const resetCaptcha = () => {
+    setCaptchaToken("");
+    resetTurnstile();
+  };
 
   const validateForm = () => {
     const errors = {};
