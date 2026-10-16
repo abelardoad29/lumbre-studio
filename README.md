@@ -28,6 +28,7 @@ npm run build
 ## Idioma automático
 
 - Detecta idioma con `navigator.language` / `navigator.languages`.
+- Solo redirige de `/` a `/es` si el navegador está en español; nunca saca a nadie de `/es` (Google navega en inglés).
 - Guarda preferencia manual en `localStorage` (`langPref`).
 
 ## Contenido y productos
@@ -47,11 +48,17 @@ npm run build
 
 ## Reemplazar logo y favicon
 
-- Logo principal: `src/assets/logo-cactus.png`
-- Archivo fuente: `src/assets/LogoLumbre.png`
-- Favicon: `public/favicon.png`
+- Archivo fuente (crema sobre transparente): `src/assets/logo-lumbre.png`
+- Logo del footer: `src/assets/logo-cactus.png` (crema; en modo claro se invierte con `.logo-mark`)
+- Logo del navbar y favicon de la pestaña según el tema: `public/favicon.png` / `public/favicon-black.png`
+- Favicon para Google, ícono PWA/iOS, logo JSON-LD e imagen OG: ver "Assets SEO" en `docs/seo.md`.
+  El favicon para Google debe tener fondo sólido: Google no ejecuta el cambio de tema y lo muestra sobre fondo claro.
 
 Sustituye los archivos por los assets reales manteniendo los mismos nombres.
+
+## SEO
+
+Títulos, descripciones y rutas viven en `src/content/seo.js`. Ver `docs/seo.md`.
 
 ## Configuración de contacto
 

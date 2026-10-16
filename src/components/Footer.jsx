@@ -25,7 +25,7 @@ const Footer = ({
     <footer className="border-t border-lumbre-gray/70 pb-16 md:pb-0">
       <div className={`mx-auto grid w-full max-w-6xl gap-8 px-6 py-12 text-sm text-lumbre-off/70 ${gridClass}`}>
         <div className="flex flex-col gap-4">
-          <img src={logo} alt="Lumbre Studio logo" className="h-10 w-auto logo-mark" />
+          <img src={logo} alt="Lumbre Studio logo" className="h-10 w-auto self-start logo-mark" />
           <p className="text-xs uppercase tracking-[0.4em] text-lumbre-off">Lumbre Studio</p>
           {description ? <p className="text-xs text-lumbre-off/60">{description}</p> : null}
         </div>

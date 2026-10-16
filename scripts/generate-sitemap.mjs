@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { PAGE_SEO } from "../src/content/seo.js";
 
 const readEnvFile = (filepath) => {
   if (!fs.existsSync(filepath)) {
@@ -66,13 +67,7 @@ if (!baseUrl) {
   process.exit(1);
 }
 
-const routes = [
-  "/",
-  "/es",
-  "/software-empaque-agricola",
-  "/sistema-nomina-agricola",
-  "/control-asistencia-qr",
-];
+const routes = Object.keys(PAGE_SEO);
 const lastmod = new Date().toISOString().slice(0, 10);
 
 const urls = routes

@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { isEnglishPath } from "../hooks/useAutoLanguageRedirect";
 
 const STORAGE_KEY = "igFabHidden";
 
 const FloatingInstagramButton = ({ url }) => {
   const [isHidden, setIsHidden] = useState(false);
+  const { pathname } = useLocation();
+  const isEnglish = isEnglishPath(pathname);
+  const hideLabel = isEnglish ? "Hide" : "Ocultar";
+  const hideAriaLabel = isEnglish ? "Hide Instagram button" : "Ocultar botón de Instagram";
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -56,16 +62,16 @@ const FloatingInstagramButton = ({ url }) => {
             className="rounded-full border border-lumbre-gray/70 px-3 py-2 text-xs uppercase tracking-[0.2em] text-lumbre-off/70 transition hover:border-lumbre-off hover:text-lumbre-off"
             type="button"
             onClick={hide}
-            aria-label="Ocultar botón de Instagram"
+            aria-label={hideAriaLabel}
           >
-            Ocultar
+            {hideLabel}
           </button>
         </div>
       </div>
 
       <div className="fixed bottom-6 right-6 z-40 hidden items-center gap-2 md:flex">
         <a
-          className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-lumbre-brown bg-lumbre-black/90 text-lumbre-off transition hover:border-lumbre-off hover:text-white"
+          className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-lumbre-brown bg-lumbre-black/90 text-lumbre-off transition hover:border-lumbre-off"
           href={url}
           target="_blank"
           rel="noreferrer"
@@ -77,9 +83,9 @@ const FloatingInstagramButton = ({ url }) => {
           className="rounded-full border border-lumbre-gray/70 px-3 py-2 text-xs uppercase tracking-[0.2em] text-lumbre-off/70 transition hover:border-lumbre-off hover:text-lumbre-off"
           type="button"
           onClick={hide}
-          aria-label="Ocultar botón de Instagram"
+          aria-label={hideAriaLabel}
         >
-          Ocultar
+          {hideLabel}
         </button>
       </div>
     </>

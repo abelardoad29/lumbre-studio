@@ -1,9 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import { LANG_PREF_KEY } from "../hooks/useAutoLanguageRedirect";
+import { LANG_PREF_KEY, isEnglishPath } from "../hooks/useAutoLanguageRedirect";
 
 const LanguageSwitcher = () => {
   const { pathname } = useLocation();
-  const isSpanish = pathname.startsWith("/es");
+  const isSpanish = !isEnglishPath(pathname);
 
   const baseClass = "text-xs uppercase tracking-[0.35em] transition";
   const activeClass = "text-lumbre-off";

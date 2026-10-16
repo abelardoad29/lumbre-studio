@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export const LANG_PREF_KEY = "langPref";
 
+// Solo "/" esta en ingles; "/es" y las landings agricolas son en espanol.
+export const isEnglishPath = (pathname) => pathname === "/";
+
 const detectLanguage = () => {
   const langs = Array.isArray(navigator.languages) && navigator.languages.length
     ? navigator.languages
@@ -21,14 +24,14 @@ export const useAutoLanguageRedirect = () => {
       return;
     }
 
-    if (pathname !== "/" && pathname !== "/es") {
+    // Solo se redirige desde "/" hacia "/es". Nunca se saca a nadie de "/es": quien abre esa URL
+    // quiere espanol, y Googlebot (navegador en ingles) debe poder renderizar e indexar "/es".
+    if (pathname !== "/") {
       return;
     }
 
-    const detected = detectLanguage();
-    const target = detected === "es" ? "/es" : "/";
-    if (pathname !== target) {
-      navigate(target, { replace: true });
+    if (detectLanguage() === "es") {
+      navigate("/es", { replace: true });
     }
   }, [navigate, pathname]);
 };

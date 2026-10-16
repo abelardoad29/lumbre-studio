@@ -8,29 +8,20 @@ import { products, scriptsAndTools } from "../content/products.es.js";
 import { useActiveSection } from "../hooks/useActiveSection";
 import { useTurnstileWidget } from "../hooks/useTurnstileWidget";
 import { applySeo } from "../utils/seo";
+import { PAGE_SEO } from "../content/seo.js";
 
 const MAILTO_LINK =
   "mailto:contacto@lumbrestudio.com?subject=Cotizaci%C3%B3n%20-%20Lumbre%20Studio";
 
 const LandingES = ({ whatsappLink }) => {
-  const pageTitle = "Software a Medida y Automatización | Lumbre Studio";
-  const pageDescription =
-    "Diseñamos software a medida y automatizamos procesos para empresas que buscan orden, control y claridad operativa.";
-  const canonicalPath = "/es";
-
   useEffect(() => {
-    applySeo({
-      title: pageTitle,
-      description: pageDescription,
-      path: canonicalPath,
-      lang: "es",
-    });
-  }, [pageTitle, pageDescription, canonicalPath]);
+    applySeo({ ...PAGE_SEO["/es"], path: "/es" });
+  }, []);
 
   const primaryButton =
-    "inline-flex items-center justify-center rounded-full bg-lumbre-off px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-black transition hover:bg-white";
+    "inline-flex items-center justify-center rounded-full bg-lumbre-off px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-black transition hover:bg-lumbre-off/90";
   const secondaryButton =
-    "inline-flex items-center justify-center rounded-full border border-lumbre-brown px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-off transition hover:border-lumbre-off hover:text-white";
+    "inline-flex items-center justify-center rounded-full border border-lumbre-brown px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-off transition hover:border-lumbre-off";
 
   const whatsappReady = Boolean(whatsappLink);
   const whatsappButtonClass = `${secondaryButton} ${whatsappReady ? "" : "pointer-events-none opacity-50"}`;

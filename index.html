@@ -2,7 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link id="favicon" rel="icon" type="image/png" href="/favicon.png" sizes="64x64" />
+    <script>
+      // Aplica el tema antes de pintar para evitar el parpadeo oscuro -> claro (ver useThemePreference.js).
+      try {
+        var storedTheme = localStorage.getItem("themePref");
+        document.documentElement.dataset.theme =
+          storedTheme === "light" || storedTheme === "dark"
+            ? storedTheme
+            : window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark";
+      } catch (error) {}
+    </script>
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link id="favicon" rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

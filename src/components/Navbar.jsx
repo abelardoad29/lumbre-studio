@@ -152,6 +152,7 @@ const Navbar = ({ links = [], ctaLabel = "", ctaHref = "#contacto", activeId }) 
             className="absolute inset-0"
             type="button"
             aria-hidden="true"
+            tabIndex={-1}
             onClick={() => setIsOpen(false)}
           />
           <div

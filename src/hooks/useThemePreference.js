@@ -29,14 +29,14 @@ const updateFavicon = (theme) => {
   favicon.href = href;
 };
 
-export const useThemePreference = () => {
-  const [theme, setTheme] = useState("dark");
+// Misma logica que el script inline de index.html, que aplica el tema antes del primer pintado.
+const getInitialTheme = () => {
+  const stored = localStorage.getItem(THEME_PREF_KEY);
+  return stored === "light" || stored === "dark" ? stored : getSystemTheme();
+};
 
-  useEffect(() => {
-    const stored = localStorage.getItem(THEME_PREF_KEY);
-    const initial = stored === "light" || stored === "dark" ? stored : getSystemTheme();
-    setTheme(initial);
-  }, []);
+export const useThemePreference = () => {
+  const [theme, setTheme] = useState(getInitialTheme);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;

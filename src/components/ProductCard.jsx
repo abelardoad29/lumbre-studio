@@ -10,9 +10,9 @@ const ProductCard = ({
 }) => {
   const hasTiers = Array.isArray(tiers) && tiers.length > 0;
   const primaryButton =
-    "inline-flex items-center justify-center rounded-full bg-lumbre-off px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-black transition hover:bg-white";
+    "inline-flex items-center justify-center rounded-full bg-lumbre-off px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-black transition hover:bg-lumbre-off/90";
   const secondaryButton =
-    "inline-flex items-center justify-center rounded-full border border-lumbre-brown px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-off transition hover:border-lumbre-off hover:text-white";
+    "inline-flex items-center justify-center rounded-full border border-lumbre-brown px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-lumbre-off transition hover:border-lumbre-off";
 
   return (
     <article className="rounded-2xl border border-lumbre-gray/80 bg-lumbre-gray/30 p-6">

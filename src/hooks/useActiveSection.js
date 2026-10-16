@@ -2,13 +2,17 @@ import { useEffect, useState } from "react";
 
 export const useActiveSection = (sectionIds = []) => {
   const [activeId, setActiveId] = useState("");
+  // Las paginas pasan un arreglo nuevo en cada render; se usa una llave estable para no
+  // recrear el IntersectionObserver en cada render.
+  const idsKey = sectionIds.join(",");
 
   useEffect(() => {
-    if (!sectionIds.length) {
+    const ids = idsKey ? idsKey.split(",") : [];
+    if (!ids.length) {
       return;
     }
 
-    const elements = sectionIds
+    const elements = ids
       .map((id) => document.getElementById(id))
       .filter((el) => Boolean(el));
 
@@ -33,7 +37,7 @@ export const useActiveSection = (sectionIds = []) => {
 
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [sectionIds]);
+  }, [idsKey]);
 
   return activeId;
 };

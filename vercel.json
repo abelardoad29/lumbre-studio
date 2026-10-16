@@ -8,6 +8,10 @@
     }
   ],
   "rewrites": [
+    { "source": "/es", "destination": "/es.html" },
+    { "source": "/software-empaque-agricola", "destination": "/software-empaque-agricola.html" },
+    { "source": "/sistema-nomina-agricola", "destination": "/sistema-nomina-agricola.html" },
+    { "source": "/control-asistencia-qr", "destination": "/control-asistencia-qr.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

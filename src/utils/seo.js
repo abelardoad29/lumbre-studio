@@ -1,21 +1,16 @@
+import { SITE_URL } from "../content/seo.js";
+
+// Misma base que scripts/prerender-seo.mjs, para que el canonical del HTML inicial y el que
+// aplica JavaScript coincidan siempre.
 export const getSiteUrl = () => {
   const envUrl = import.meta.env.VITE_PUBLIC_SITE_URL;
   if (envUrl && envUrl.trim()) {
-    return envUrl.replace(/\/+$/, "");
+    return envUrl.trim().replace(/\/+$/, "");
   }
-  if (typeof window !== "undefined" && window.location && window.location.origin) {
-    return window.location.origin;
-  }
-  return "";
+  return SITE_URL;
 };
 
-export const buildUrl = (path = "/") => {
-  const base = getSiteUrl();
-  if (!base) {
-    return path;
-  }
-  return new URL(path, base).toString();
-};
+export const buildUrl = (path = "/") => new URL(path, getSiteUrl()).toString();
 
 const setMetaTag = (attrName, attrValue, content) => {
   const selector = `meta[${attrName}="${attrValue}"]`;
