@@ -1,4 +1,5 @@
 {
+  "trailingSlash": false,
   "redirects": [
     {
       "source": "/(.*)",
@@ -11,7 +12,21 @@
     { "source": "/es", "destination": "/es.html" },
     { "source": "/software-empaque-agricola", "destination": "/software-empaque-agricola.html" },
     { "source": "/sistema-nomina-agricola", "destination": "/sistema-nomina-agricola.html" },
-    { "source": "/control-asistencia-qr", "destination": "/control-asistencia-qr.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/control-asistencia-qr", "destination": "/control-asistencia-qr.html" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    }
   ]
 }

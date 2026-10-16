@@ -1,4 +1,4 @@
-import { SITE_URL } from "../content/seo.js";
+import { DEFAULT_OG_IMAGE, SITE_URL } from "../content/seo.js";
 
 // Misma base que scripts/prerender-seo.mjs, para que el canonical del HTML inicial y el que
 // aplica JavaScript coincidan siempre.
@@ -38,11 +38,13 @@ export const applySeo = ({
   description,
   path = "/",
   image,
+  imageAlt,
   type = "website",
   lang,
+  locale,
 }) => {
   const canonicalUrl = buildUrl(path);
-  const imageUrl = image || buildUrl("/og-cover.png");
+  const imageUrl = buildUrl(image || DEFAULT_OG_IMAGE);
 
   if (title) {
     document.title = title;
@@ -59,6 +61,12 @@ export const applySeo = ({
   setMetaTag("property", "og:url", canonicalUrl);
   setMetaTag("property", "og:type", type);
   setMetaTag("property", "og:image", imageUrl);
+  if (locale) {
+    setMetaTag("property", "og:locale", locale);
+  }
+  if (imageAlt) {
+    setMetaTag("property", "og:image:alt", imageAlt);
+  }
 
   setMetaTag("name", "twitter:card", "summary_large_image");
   setMetaTag("name", "twitter:title", title);

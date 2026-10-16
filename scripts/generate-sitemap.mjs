@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { PAGE_SEO } from "../src/content/seo.js";
+import { LANGUAGE_ALTERNATES, PAGE_SEO } from "../src/content/seo.js";
 
 const readEnvFile = (filepath) => {
   if (!fs.existsSync(filepath)) {
@@ -70,14 +70,23 @@ if (!baseUrl) {
 const routes = Object.keys(PAGE_SEO);
 const lastmod = new Date().toISOString().slice(0, 10);
 
+// "/" y "/es" se declaran como versiones del mismo contenido en otro idioma (hreflang), igual que en el HTML.
+const alternateLinks = (route) =>
+  LANGUAGE_ALTERNATES.some((alternate) => alternate.path === route)
+    ? LANGUAGE_ALTERNATES.map(
+        (alternate) =>
+          `\n    <xhtml:link rel="alternate" hreflang="${alternate.hreflang}" href="${new URL(alternate.path, baseUrl)}" />`
+      ).join("")
+    : "";
+
 const urls = routes
   .map((route) => {
     const url = new URL(route, baseUrl).toString();
-    return `  <url>\n    <loc>${url}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
+    return `  <url>\n    <loc>${url}</loc>\n    <lastmod>${lastmod}</lastmod>${alternateLinks(route)}\n  </url>`;
   })
   .join("\n");
 
-const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`;
 const outputPath = path.join(process.cwd(), "public", "sitemap.xml");
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });

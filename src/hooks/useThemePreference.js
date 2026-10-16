@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 export const THEME_PREF_KEY = "themePref";
 
@@ -7,47 +7,48 @@ const FAVICON_BY_THEME = {
   light: "/favicon-black.png",
 };
 
-const getSystemTheme = () => {
-  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
-    return "light";
-  }
-  return "dark";
+const THEME_COLOR = {
+  dark: "#0B0B0B",
+  light: "#F7F4EF",
 };
 
-const updateFavicon = (theme) => {
-  const href = FAVICON_BY_THEME[theme] || FAVICON_BY_THEME.dark;
-  let favicon = document.getElementById("favicon");
+// El tema inicial lo aplica el script inline de index.html antes del primer pintado.
+// Aqui solo se lee de <html data-theme>, asi el render es igual en el servidor y en el navegador
+// (los iconos y logos que dependen del tema se intercambian con CSS: .only-dark / .only-light).
+const getCurrentTheme = () => (document.documentElement.dataset.theme === "light" ? "light" : "dark");
 
+const syncThemeAssets = (theme) => {
+  let favicon = document.getElementById("favicon");
   if (!favicon) {
     favicon = document.createElement("link");
     favicon.id = "favicon";
     favicon.rel = "icon";
     document.head.appendChild(favicon);
   }
-
   favicon.type = "image/png";
-  favicon.href = href;
-};
+  favicon.href = FAVICON_BY_THEME[theme];
 
-// Misma logica que el script inline de index.html, que aplica el tema antes del primer pintado.
-const getInitialTheme = () => {
-  const stored = localStorage.getItem(THEME_PREF_KEY);
-  return stored === "light" || stored === "dark" ? stored : getSystemTheme();
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  if (themeColor) {
+    themeColor.setAttribute("content", THEME_COLOR[theme]);
+  }
 };
 
 export const useThemePreference = () => {
-  const [theme, setTheme] = useState(getInitialTheme);
-
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    updateFavicon(theme);
-  }, [theme]);
+    syncThemeAssets(getCurrentTheme());
+  }, []);
 
-  const toggleTheme = () => {
-    const next = theme === "light" ? "dark" : "light";
-    setTheme(next);
-    localStorage.setItem(THEME_PREF_KEY, next);
-  };
+  const toggleTheme = useCallback(() => {
+    const next = getCurrentTheme() === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = next;
+    syncThemeAssets(next);
+    try {
+      localStorage.setItem(THEME_PREF_KEY, next);
+    } catch (error) {
+      // Sin almacenamiento: el tema aplica solo a esta visita.
+    }
+  }, []);
 
-  return { theme, toggleTheme };
+  return { toggleTheme };
 };

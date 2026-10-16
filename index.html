@@ -2,74 +2,85 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <script>
-      // Aplica el tema antes de pintar para evitar el parpadeo oscuro -> claro (ver useThemePreference.js).
-      try {
-        var storedTheme = localStorage.getItem("themePref");
-        document.documentElement.dataset.theme =
-          storedTheme === "light" || storedTheme === "dark"
-            ? storedTheme
-            : window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
-              ? "light"
-              : "dark";
-      } catch (error) {}
+      // Corre antes del primer pintado (ver useThemePreference.js, useScrollReveal.js y utils/language.js).
+      (function () {
+        var root = document.documentElement;
+        try {
+          // 1. Idioma: en "/" se redirige a "/es" si el navegador prefiere espanol y no hay eleccion manual.
+          //    Nunca se saca a nadie de "/es": Googlebot navega en ingles y debe poder indexar ambas versiones.
+          if (location.pathname === "/") {
+            var pref = localStorage.getItem("langPref");
+            if (pref !== "en" && pref !== "es") {
+              var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""];
+              for (var i = 0; i < langs.length; i++) {
+                var code = String(langs[i]).toLowerCase();
+                if (code.indexOf("en") === 0) break;
+                if (code.indexOf("es") === 0) {
+                  root.style.visibility = "hidden";
+                  location.replace("/es" + location.search + location.hash);
+                  return;
+                }
+              }
+            }
+          }
+        } catch (error) {}
+        try {
+          // 2. Tema guardado o el del sistema.
+          var storedTheme = localStorage.getItem("themePref");
+          root.dataset.theme =
+            storedTheme === "light" || storedTheme === "dark"
+              ? storedTheme
+              : window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+                ? "light"
+                : "dark";
+        } catch (error) {
+          root.dataset.theme = "dark";
+        }
+        // 3. Animaciones al hacer scroll: solo si hay JS. Si el bundle no carga a tiempo, se muestra todo.
+        root.classList.add("js");
+        setTimeout(function () {
+          if (!window.__lumbreRevealReady) root.classList.remove("js");
+        }, 5000);
+      })();
     </script>
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link id="favicon" rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Design &amp; Custom Software Studio | Lumbre Studio</title>
     <meta
       name="description"
-      content="We design custom software and automate business processes for companies that need order, control, and operational clarity."
+      content="We design and build fast, SEO-ready websites and custom software: landing pages, online stores, web apps and AI automation. Clear pricing in USD."
     />
-    <meta name="robots" content="index,follow" />
-    <meta property="og:title" content="Custom Software &amp; Automation Studio | Lumbre Studio" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="author" content="Lumbre Studio" />
+    <meta property="og:site_name" content="Lumbre Studio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Web Design &amp; Custom Software Studio | Lumbre Studio" />
     <meta
       property="og:description"
-      content="We design custom software and automate business processes for companies that need order, control, and operational clarity."
+      content="We design and build fast, SEO-ready websites and custom software: landing pages, online stores, web apps and AI automation. Clear pricing in USD."
     />
-    <meta property="og:type" content="website" />
     <meta property="og:url" content="https://lumbrestudio.com/" />
-    <meta property="og:image" content="https://lumbrestudio.com/og-cover.png" />
+    <meta property="og:image" content="https://lumbrestudio.com/og-en.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Lumbre Studio — Websites and custom software that grow your business" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Custom Software &amp; Automation Studio | Lumbre Studio" />
+    <meta name="twitter:title" content="Web Design &amp; Custom Software Studio | Lumbre Studio" />
     <meta
       name="twitter:description"
-      content="We design custom software and automate business processes for companies that need order, control, and operational clarity."
+      content="We design and build fast, SEO-ready websites and custom software: landing pages, online stores, web apps and AI automation. Clear pricing in USD."
     />
-    <meta name="twitter:image" content="https://lumbrestudio.com/og-cover.png" />
+    <meta name="twitter:image" content="https://lumbrestudio.com/og-en.png" />
     <link rel="canonical" href="https://lumbrestudio.com/" />
     <link rel="alternate" href="https://lumbrestudio.com/" hreflang="en" />
     <link rel="alternate" href="https://lumbrestudio.com/es" hreflang="es" />
     <link rel="alternate" href="https://lumbrestudio.com/" hreflang="x-default" />
     <meta name="theme-color" content="#0B0B0B" />
-    <title>Custom Software &amp; Automation Studio | Lumbre Studio</title>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Lumbre Studio",
-        "url": "https://lumbrestudio.com",
-        "logo": "https://lumbrestudio.com/logo-cactus.png",
-        "sameAs": ["https://instagram.com/lumbre.studiomx"],
-        "contactPoint": [
-          {
-            "@type": "ContactPoint",
-            "contactType": "sales",
-            "email": "contacto@lumbrestudio.com"
-          }
-        ]
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Lumbre Studio",
-        "url": "https://lumbrestudio.com"
-      }
-    </script>
   </head>
   <body>
     <div id="root"></div>

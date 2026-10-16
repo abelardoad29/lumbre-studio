@@ -8,29 +8,58 @@
     --lumbre-black: 11 11 11;
     --lumbre-gray: 42 42 42;
     --lumbre-brown: 205 160 96;
+    --lumbre-ember: 232 116 52;
     --lumbre-off: 244 241 236;
-    --lumbre-hero-glow: rgba(42, 42, 42, 0.6);
+    --lumbre-error: 248 113 113;
+    --lumbre-hero-glow: rgba(205, 160, 96, 0.16);
+    --lumbre-shadow: rgba(0, 0, 0, 0.75);
   }
 
   [data-theme="light"] {
     color-scheme: light;
-    --lumbre-black: 244 241 236;
+    --lumbre-black: 247 244 239;
     --lumbre-gray: 212 203 193;
-    --lumbre-brown: 166 120 70;
-    --lumbre-off: 11 11 11;
-    --lumbre-hero-glow: rgba(158, 122, 85, 0.25);
+    --lumbre-brown: 140 94 42;
+    --lumbre-ember: 196 86 30;
+    --lumbre-off: 17 15 13;
+    --lumbre-error: 185 28 28;
+    --lumbre-hero-glow: rgba(205, 140, 70, 0.2);
+    --lumbre-shadow: rgba(90, 64, 30, 0.22);
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
-    @apply bg-lumbre-black text-lumbre-off font-sans antialiased transition-colors duration-200;
+    @apply bg-lumbre-black font-sans text-lumbre-off antialiased transition-colors duration-300;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
   }
 
-  a {
-    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lumbre-off;
+  ::selection {
+    background: rgb(var(--lumbre-brown) / 0.35);
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary {
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lumbre-brown;
+  }
+
+  select option {
+    background-color: rgb(var(--lumbre-black));
+    color: rgb(var(--lumbre-off));
   }
 
   .logo-mark {
@@ -39,5 +68,307 @@
 
   [data-theme="light"] .logo-mark {
     filter: invert(1) brightness(0.2);
+  }
+
+  /* Elementos que cambian con el tema sin depender de JavaScript (evita diferencias al hidratar). */
+  [data-theme="light"] .only-dark,
+  :root:not([data-theme="light"]) .only-light {
+    display: none;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-lumbre-brown;
+  }
+
+  .btn {
+    @apply relative inline-flex select-none items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-full px-6 py-3.5 text-sm font-semibold transition duration-300 ease-out-expo;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2.5 text-[13px];
+  }
+
+  .btn-primary {
+    @apply btn bg-lumbre-off text-lumbre-black hover:-translate-y-0.5 active:translate-y-0;
+    box-shadow: 0 10px 30px -12px rgb(var(--lumbre-brown) / 0);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 14px 34px -12px rgb(var(--lumbre-brown) / 0.65);
+  }
+
+  /* Brillo que cruza el boton principal al pasar el mouse. */
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgb(var(--lumbre-black) / 0.18) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  .btn-primary:hover::after {
+    transform: translateX(120%);
+  }
+
+  .btn-secondary {
+    @apply btn border border-lumbre-off/15 bg-lumbre-off/[0.03] text-lumbre-off backdrop-blur hover:-translate-y-0.5 hover:border-lumbre-brown/70 hover:bg-lumbre-brown/10 active:translate-y-0;
+  }
+
+  .btn .btn-arrow {
+    @apply transition-transform duration-300 ease-out-expo;
+  }
+
+  .btn:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+
+  .card {
+    @apply rounded-3xl border border-lumbre-off/10 bg-lumbre-off/[0.025];
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-lumbre-off/10 bg-lumbre-off/[0.04] px-3 py-1 text-xs text-lumbre-off/70;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border border-lumbre-off/15 bg-lumbre-off/[0.03] px-4 py-3.5 text-base text-lumbre-off outline-none transition duration-200 placeholder:text-lumbre-off/35 hover:border-lumbre-off/25 focus:border-lumbre-brown focus:bg-lumbre-off/[0.05] focus:ring-4 focus:ring-lumbre-brown/15 focus-visible:outline-none;
+  }
+
+  .field[aria-invalid="true"] {
+    border-color: rgb(var(--lumbre-error) / 0.7);
+    --tw-ring-color: rgb(var(--lumbre-error) / 0.15);
+  }
+
+  .field-label {
+    @apply mb-2 block text-sm font-medium text-lumbre-off/80;
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(
+      100deg,
+      rgb(var(--lumbre-brown)) 0%,
+      rgb(var(--lumbre-ember)) 35%,
+      rgb(var(--lumbre-brown)) 65%,
+      rgb(var(--lumbre-ember)) 100%
+    );
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-pan 8s linear infinite;
+  }
+
+  .shadow-elev {
+    box-shadow: 0 40px 90px -40px var(--lumbre-shadow);
+  }
+
+  /* Cuadricula decorativa que se desvanece hacia los bordes. */
+  .bg-grid {
+    background-image: linear-gradient(to right, rgb(var(--lumbre-off) / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--lumbre-off) / 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 75% 60% at 50% 0%, #000 35%, transparent 100%);
+    mask-image: radial-gradient(ellipse 75% 60% at 50% 0%, #000 35%, transparent 100%);
+  }
+
+  /* Halo que sigue al cursor en tarjetas (ver utils/spotlight.js). */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 0%),
+      rgb(var(--lumbre-brown) / 0.13),
+      transparent 45%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+
+  /* Borde con degradado giratorio para la tarjeta destacada. */
+  .border-glow {
+    position: relative;
+  }
+
+  .border-glow::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--glow-angle),
+      rgb(var(--lumbre-brown) / 0.15),
+      rgb(var(--lumbre-brown)),
+      rgb(var(--lumbre-ember)),
+      rgb(var(--lumbre-brown) / 0.15) 45%,
+      rgb(var(--lumbre-brown) / 0.15)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: glow-spin 6s linear infinite;
+    pointer-events: none;
+  }
+
+  .marquee {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .marquee:hover .animate-marquee {
+    animation-play-state: paused;
+  }
+
+  /* Acordeon con altura animada (FAQ). */
+  .collapse-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .collapse-panel[data-open="true"] {
+    grid-template-rows: 1fr;
+  }
+
+  .collapse-panel > * {
+    overflow: hidden;
+  }
+}
+
+@layer utilities {
+  /* Entrada del hero al cargar la pagina. */
+  .enter {
+    animation: enter 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--enter-delay, 0ms);
+  }
+
+  /* Animaciones al hacer scroll: solo se ocultan si JavaScript esta activo (clase .js en <html>).
+     useScrollReveal agrega data-revealed cuando el elemento entra en pantalla. */
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js [data-reveal="fade"] {
+    transform: none;
+  }
+
+  .js [data-reveal="scale"] {
+    transform: scale(0.96) translate3d(0, 16px, 0);
+  }
+
+  .js [data-reveal="left"] {
+    transform: translate3d(-28px, 0, 0);
+  }
+
+  .js [data-reveal="right"] {
+    transform: translate3d(28px, 0, 0);
+  }
+
+  .js [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .ember {
+    position: absolute;
+    bottom: -10px;
+    width: var(--size, 4px);
+    height: var(--size, 4px);
+    border-radius: 9999px;
+    background: rgb(var(--lumbre-ember));
+    box-shadow: 0 0 12px 2px rgb(var(--lumbre-ember) / 0.6);
+    opacity: 0;
+    animation: ember-rise var(--duration, 9s) linear infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  .safe-bottom {
+    bottom: calc(1.25rem + env(safe-area-inset-bottom));
+  }
+}
+
+@property --glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes gradient-pan {
+  to {
+    background-position: 220% center;
+  }
+}
+
+@keyframes glow-spin {
+  to {
+    --glow-angle: 360deg;
+  }
+}
+
+@keyframes ember-rise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  15% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift, 20px), -520px, 0) scale(0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .ember {
+    display: none;
   }
 }

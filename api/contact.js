@@ -155,8 +155,9 @@ export default async function handler(req, res) {
     }
   }
 
-  const { name, email, message, service, captchaToken } = payload || {};
+  const { name, email, phone, message, service, lang, captchaToken } = payload || {};
   const rawName = String(name || "").trim();
+  const rawPhone = String(phone || "").trim().slice(0, 40);
   const rawEmail = String(email || "").trim();
   const rawMessage = String(message || "").trim();
 
@@ -193,6 +194,8 @@ export default async function handler(req, res) {
   const safeEmail = escapeHtml(rawEmail);
   const safeMessage = escapeHtml(rawMessage).replace(/\n/g, "<br />");
   const safeService = service ? escapeHtml(service) : "";
+  const safePhone = rawPhone ? escapeHtml(rawPhone) : "";
+  const safeLang = lang === "en" ? "English (/)" : lang === "es" ? "Español (/es)" : "";
   const subjectName = rawName.replace(/[\r\n]+/g, " ").trim();
 
   const html = `
@@ -200,7 +203,9 @@ export default async function handler(req, res) {
       <h2>New contact request</h2>
       <p><strong>Name:</strong> ${safeName}</p>
       <p><strong>Email:</strong> ${safeEmail}</p>
+      ${safePhone ? `<p><strong>Phone / WhatsApp:</strong> ${safePhone}</p>` : ""}
       ${safeService ? `<p><strong>Service:</strong> ${safeService}</p>` : ""}
+      ${safeLang ? `<p><strong>Page language:</strong> ${safeLang}</p>` : ""}
       <p><strong>Message:</strong></p>
       <p>${safeMessage}</p>
     </div>

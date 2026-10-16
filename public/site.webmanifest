@@ -1,6 +1,10 @@
 {
   "name": "Lumbre Studio",
   "short_name": "Lumbre",
+  "description": "Páginas web y software a medida. Websites and custom software.",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "es",
   "icons": [
     {
       "src": "/icon-192.png",
