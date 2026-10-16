@@ -31,6 +31,24 @@ const Contact = ({ id, copy, pricing, lang, selectedPlan }) => {
   const [formErrors, setFormErrors] = useState({});
   const [captchaToken, setCaptchaToken] = useState("");
   const nameInputRef = useRef(null);
+  const cardRef = useRef(null);
+  const successTitleRef = useRef(null);
+
+  // Tras enviar, el mensaje de exito se muestra encima del formulario (misma altura, sin saltos)
+  // y se trae a la vista, porque el usuario suele estar al final del formulario, junto al boton.
+  useEffect(() => {
+    if (formStatus !== "success") {
+      return;
+    }
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    successTitleRef.current?.focus({ preventScroll: true });
+    cardRef.current?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  }, [formStatus]);
+
+  const resetForm = () => {
+    setFormStatus("idle");
+    window.requestAnimationFrame(() => nameInputRef.current?.focus({ preventScroll: true }));
+  };
 
   // Al elegir un paquete en Precios se preselecciona aqui.
   useEffect(() => {
@@ -185,21 +203,39 @@ const Contact = ({ id, copy, pricing, lang, selectedPlan }) => {
         <SectionHeader eyebrow={copy.eyebrow} title={copy.title} subtitle={copy.subtitle} />
 
         <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:gap-8">
-          <div className="card relative flex min-w-0 flex-col overflow-hidden p-6 sm:p-9" data-reveal="">
-            {/* El formulario se queda montado (solo oculto) para no perder el widget de Turnstile. */}
+          <div
+            ref={cardRef}
+            className="card relative flex min-w-0 flex-col overflow-hidden p-6 sm:p-9"
+            data-reveal=""
+          >
+            {/* El formulario se queda montado e invisible (conserva su altura y el widget de Turnstile)
+                y el mensaje de exito se superpone en el mismo espacio. */}
             {formStatus === "success" ? (
-              <div className="enter flex min-h-[420px] flex-col items-center justify-center text-center" role="status">
+              <div
+                className="enter absolute inset-0 z-10 flex flex-col items-center justify-center p-6 text-center"
+                role="status"
+              >
                 <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-lumbre-brown to-lumbre-ember text-lumbre-black">
                   <Icon name="check" className="h-8 w-8" strokeWidth={2.4} />
                 </span>
-                <h3 className="mt-6 text-2xl font-semibold tracking-tight text-lumbre-off">{form.successTitle}</h3>
+                <h3
+                  ref={successTitleRef}
+                  className="mt-6 text-2xl font-semibold tracking-tight text-lumbre-off focus:outline-none"
+                  tabIndex={-1}
+                >
+                  {form.successTitle}
+                </h3>
                 <p className="mt-3 max-w-sm text-lumbre-off/60">{form.successBody}</p>
-                <button className="btn-secondary mt-8" type="button" onClick={() => setFormStatus("idle")}>
+                <button className="btn-secondary mt-8" type="button" onClick={resetForm}>
                   {form.successReset}
                 </button>
               </div>
             ) : null}
-            <form className={formStatus === "success" ? "hidden" : "flex flex-1 flex-col"} noValidate onSubmit={handleSubmit}>
+            <form
+              className={`flex flex-1 flex-col ${formStatus === "success" ? "invisible" : ""}`}
+              noValidate
+              onSubmit={handleSubmit}
+            >
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label className="field-label" htmlFor="contact-name">
@@ -293,7 +329,15 @@ const Contact = ({ id, copy, pricing, lang, selectedPlan }) => {
               ) : null}
 
               <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-xs text-lumbre-off/60">{form.privacy}</p>
+                <div className="space-y-1.5 text-xs text-lumbre-off/60">
+                  <p>{form.privacy}</p>
+                  {turnstileSiteKey ? (
+                    <p className="flex items-center gap-1.5">
+                      <Icon name="shield" className="h-3.5 w-3.5 shrink-0 text-lumbre-brown" />
+                      {form.protected}
+                    </p>
+                  ) : null}
+                </div>
                 <button className="btn-primary sm:min-w-[200px]" type="submit" disabled={formStatus === "loading"}>
                   {formStatus === "loading" ? (
                     <>

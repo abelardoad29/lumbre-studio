@@ -444,6 +444,7 @@ const home = {
       submit: "Send message",
       sending: "Sending…",
       privacy: "We only use your details to reply to you.",
+      protected: "Spam protection by Cloudflare Turnstile.",
       successTitle: "Message sent!",
       successBody: "Thanks for reaching out. We'll get back to you within 24 hours.",
       successReset: "Send another message",
