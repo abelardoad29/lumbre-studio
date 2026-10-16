@@ -445,6 +445,7 @@ const home = {
       sending: "Sending…",
       privacy: "We only use your details to reply to you.",
       protected: "Spam protection by Cloudflare Turnstile.",
+      captchaFallback: "Message us on WhatsApp",
       successTitle: "Message sent!",
       successBody: "Thanks for reaching out. We'll get back to you within 24 hours.",
       successReset: "Send another message",
@@ -454,7 +455,8 @@ const home = {
         email: "Please enter your email.",
         emailInvalid: "Please check your email address.",
         message: "Tell us a bit about your project.",
-        captcha: "Please confirm you're not a robot.",
+        captcha:
+          "We couldn't verify your browser (spam protection). Please try again in a few seconds or message us on WhatsApp.",
       },
     },
     nextTitle: "What happens next?",

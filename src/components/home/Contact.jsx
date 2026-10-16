@@ -324,7 +324,19 @@ const Contact = ({ id, copy, pricing, lang, selectedPlan }) => {
               {turnstileSiteKey ? (
                 <div className="mt-5">
                   <div ref={captchaContainerRef} />
-                  {formErrors.captcha ? <p className="mt-2 text-sm text-lumbre-error">{formErrors.captcha}</p> : null}
+                  {formErrors.captcha ? (
+                    <p className="mt-2 text-sm text-lumbre-error" role="alert">
+                      {formErrors.captcha}{" "}
+                      <a
+                        className="font-semibold underline underline-offset-2 hover:text-lumbre-off"
+                        href={whatsappUrl(copy.whatsappMessage)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {form.captchaFallback}
+                      </a>
+                    </p>
+                  ) : null}
                 </div>
               ) : null}
 

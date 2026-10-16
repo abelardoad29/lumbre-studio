@@ -3,7 +3,12 @@ import { useEffect, useRef } from "react";
 const TURNSTILE_SCRIPT_ID = "cloudflare-turnstile-api";
 const TURNSTILE_SCRIPT_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 
+const MAX_CHALLENGE_ATTEMPTS = 3;
+const RETRY_DELAY_MS = 800;
+
 let turnstileLoadPromise;
+
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const getTurnstile = () => {
   if (typeof window === "undefined") {
@@ -112,6 +117,8 @@ export const useTurnstileWidget = ({ siteKey, onSuccess, onExpired, onError }) =
       sitekey: siteKey,
       execution: "execute",
       appearance: "interaction-only",
+      // Los reintentos los controla execute(), para que el envio del formulario espere el resultado.
+      retry: "never",
       callback: (token) => {
         resolvePendingChallenge(token);
         callbacksRef.current.onSuccess?.(token);
@@ -120,14 +127,32 @@ export const useTurnstileWidget = ({ siteKey, onSuccess, onExpired, onError }) =
         resolvePendingChallenge("");
         callbacksRef.current.onExpired?.();
       },
-      "error-callback": () => {
+      "error-callback": (errorCode) => {
         resolvePendingChallenge("");
-        callbacksRef.current.onError?.();
+        callbacksRef.current.onError?.(errorCode);
+        // true = error manejado: Turnstile no lo vuelve a reportar en la consola.
+        return true;
       },
     });
 
     return turnstile;
   };
+
+  // Lanza un reto y espera su resultado: el token, o "" si falla o expira.
+  const runChallenge = (turnstile) =>
+    new Promise((resolve) => {
+      pendingChallengeRef.current = resolve;
+      try {
+        turnstile.execute(containerRef.current);
+      } catch (error) {
+        try {
+          turnstile.execute(widgetIdRef.current);
+        } catch (fallbackError) {
+          resolvePendingChallenge("");
+          callbacksRef.current.onError?.();
+        }
+      }
+    });
 
   const execute = async () => {
     try {
@@ -141,19 +166,19 @@ export const useTurnstileWidget = ({ siteKey, onSuccess, onExpired, onError }) =
         return response;
       }
 
-      return await new Promise((resolve) => {
-        pendingChallengeRef.current = resolve;
-        try {
-          turnstile.execute(containerRef.current);
-        } catch (error) {
-          try {
-            turnstile.execute(widgetIdRef.current);
-          } catch (fallbackError) {
-            resolvePendingChallenge("");
-            callbacksRef.current.onError?.();
-          }
+      // Un reto puede fallar de forma aislada (errores 600xxx de Cloudflare, "generic challenge failure",
+      // son reintentables). Se reinicia el widget y se intenta de nuevo antes de mostrar un error.
+      for (let attempt = 1; attempt <= MAX_CHALLENGE_ATTEMPTS; attempt += 1) {
+        if (attempt > 1) {
+          turnstile.reset(widgetIdRef.current);
+          await wait(RETRY_DELAY_MS * (attempt - 1));
         }
-      });
+        const token = await runChallenge(turnstile);
+        if (token || widgetIdRef.current === null) {
+          return token;
+        }
+      }
+      return "";
     } catch (error) {
       resolvePendingChallenge("");
       callbacksRef.current.onError?.();
